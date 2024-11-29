@@ -26,16 +26,14 @@ pipeline {
                 bat 'mvn test'
             }
         }
-
-        stage('Publish Reports') {
-            steps {
-                testNG reportFilename: '**/testng-results.xml'
-            }
-        }
     }
 
     post {
         always {
+            // Publish TestNG results
+            step([$class: 'Publisher',
+                  reportFilenamePattern: '**/testng-results.xml'])
+
             // Clean workspace
             cleanWs()
         }
