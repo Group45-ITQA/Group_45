@@ -10,6 +10,7 @@ public class InventoryPage {
     private By backpackAddButton = By.id("add-to-cart-sauce-labs-backpack");
     private By cartIcon = By.id("shopping_cart_container");
 
+
     public InventoryPage(WebDriver driver) {
         this.driver = driver;
     }
