@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 cleanWs()
-                git branch: 'main', url: 'https://github.com/Group45-ITQA/UI_Testing.git'
+                git branch: 'main', url: 'https://github.com/Group45-ITQA/Group_45.git'
             }
         }
 
