@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7fecf50d-b981-4e00-bbc6-1bc5eff997d1" name="Changes" comment="Add product to cart verification">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/qa/pages/ProductPage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/qa/utils/DriverManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/qa/runners/TestRunner.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/qa/steps/ProductSteps.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/features/product.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/testing.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/qa/pages/ProductPage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/qa/utils/DriverManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/cucumber-reports.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/qa/runners/TestRunner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/qa/steps/ProductSteps.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/product.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/testing.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2pUJRtfZ1YmKCLrSAJoPsau32EZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Projects/Group45/Group45_UITesting/Functional_Testing",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RunManager" selected="TestNG.TestRunner">
+    <configuration name="LoginTest" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="Group45_UITesting" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.group45.test.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.group45.test.tests" />
+      <option name="MAIN_CLASS_NAME" value="com.group45.test.tests.LoginTest" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRunner" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="Group45_UITesting" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.qa.runners.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.qa.runners" />
+      <option name="MAIN_CLASS_NAME" value="com.qa.runners.TestRunner" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="&lt;default&gt;" type="TestNG" temporary="true" nameIsGenerated="true">
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="PACKAGE" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="TestNG.TestRunner" />
+        <item itemvalue="TestNG.LoginTest" />
+        <item itemvalue="TestNG.&lt;default&gt;" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7fecf50d-b981-4e00-bbc6-1bc5eff997d1" name="Changes" comment="" />
+      <created>1732814725682</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732814725682</updated>
+      <workItem from="1732814726922" duration="1206000" />
+      <workItem from="1732849834571" duration="7596000" />
+      <workItem from="1733057714764" duration="1904000" />
+      <workItem from="1733060231752" duration="74000" />
+      <workItem from="1733060392021" duration="1392000" />
+      <workItem from="1733063521649" duration="584000" />
+      <workItem from="1733886158822" duration="1570000" />
+      <workItem from="1733888343219" duration="1191000" />
+      <workItem from="1733891009858" duration="2561000" />
+      <workItem from="1733894560225" duration="1202000" />
+      <workItem from="1734151476705" duration="817000" />
+      <workItem from="1734152617838" duration="5647000" />
+      <workItem from="1734329517863" duration="1043000" />
+      <workItem from="1734330625539" duration="3523000" />
+      <workItem from="1734355818345" duration="33000" />
+    </task>
+    <task id="LOCAL-00001" summary="Initial Set Up">
+      <created>1732815709240</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732815709240</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add product to cart verification">
+      <created>1734158790822</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1734158790824</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add product to cart verification">
+      <created>1734159021825</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1734159021825</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feature/v1/TC001-Add-product-to-cart-verification" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Set Up" />
+    <MESSAGE value="Add product to cart verification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add product to cart verification" />
+  </component>
+</project>
