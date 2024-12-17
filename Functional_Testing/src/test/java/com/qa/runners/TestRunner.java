@@ -5,8 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = "com.qa.steps",
-        plugin = {"pretty", "html:target/cucumber-reports.html"},
-        tags = "@emptyCartCheckout"
+        plugin = {"pretty", "html:target/cucumber-reports.html"}
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 }

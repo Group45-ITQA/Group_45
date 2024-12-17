@@ -19,14 +19,40 @@ public class CartPage {
     @FindBy(className = "error-message-container")
     private WebElement errorMessage;
 
+    @FindBy(className = "shopping_cart_link")
+    private WebElement cartLink;
+
+
+
     public CartPage() {
         this.driver = DriverManager.getDriver();
         PageFactory.initElements(driver, this);
     }
 
     public void goToCartPage() {
-        driver.findElement(By.className("shopping_cart_link")).click();
+        cartLink.click();
         sleep(1);
+    }
+
+    public void addItemToCart(String itemName) {
+        String xpath = String.format("//div[text()='%s']/ancestor::div[@class='inventory_item']//button", itemName);
+        driver.findElement(By.xpath(xpath)).click();
+        sleep(1);
+    }
+
+    public void removeItemFromCart(String itemName) {
+        String xpath = String.format("//div[text()='%s']/ancestor::div[@class='cart_item']//button[contains(@id,'remove')]", itemName);
+        driver.findElement(By.xpath(xpath)).click();
+        sleep(1);
+    }
+
+    public boolean isItemInCart(String itemName) {
+        try {
+            String xpath = String.format("//div[text()='%s']", itemName);
+            return driver.findElement(By.xpath(xpath)).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean isCheckoutButtonEnabled() {

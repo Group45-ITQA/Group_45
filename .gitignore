@@ -1,46 +1,17 @@
-# Ignore Maven target directories
+# Root level ignores
+.idea/
+.idea/**/
+**/.idea/
+*.iml
+workspace.xml
+misc.xml
+
+# Maven target directories
 **/target/
 
-# Ignore logs
+# Common ignores
 *.log
-
-# Ignore Eclipse or IntelliJ project files
-*.iml
-.idea/
-*.ipr
-*.iws
-*.class
-
-# Ignore Maven dependencies folder
-.mvn/
-target/
-dependency-reduced-pom.xml
-
-# Ignore build directories
-build/
-out/
-
-# Ignore temporary files
-*.tmp
-*.swp
-*.bak
-*~
-
-# Ignore OS files
 .DS_Store
 Thumbs.db
-desktop.ini
-
-# Ignore compiled files
-*.jar
-*.war
-*.ear
-
-# Exclude test reports
-**/surefire-reports/
-**/failsafe-reports/
-**/test-output/
-
-# Ignore environment variables and secrets
-.env
-.env.*
+/.idea
+.idea/workspace.xml
