@@ -1,1 +1,47 @@
-./Funtional_Testing/target
+# Ignore Maven target directories
+Funtional_Testing/target/
+API_Testing/target/
+
+# Ignore logs
+*.log
+
+# Ignore Eclipse or IntelliJ project files
+*.iml
+.idea/
+*.ipr
+*.iws
+*.class
+
+# Ignore Maven dependencies folder
+.mvn/
+target/
+dependency-reduced-pom.xml
+
+# Ignore build directories
+build/
+out/
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+*~
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore compiled files
+*.jar
+*.war
+*.ear
+
+# Exclude test reports
+**/surefire-reports/
+**/failsafe-reports/
+**/test-output/
+
+# Ignore environment variables and secrets
+.env
+.env.*

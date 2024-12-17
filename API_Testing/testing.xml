@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Library API Test Suite" verbose="1">
+    <test name="Library API Tests">
+        <groups>
+            <run>
+                <include name="get_apis"/>
+                <include name="post_api"/>
+                <include name="put_api"/>
+                <include name="delete_api"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.qa.runner.TestRunner"/>
+        </classes>
+    </test>
+
+    <listeners>
+        <listener class-name="org.testng.reporters.EmailableReporter"/>
+        <listener class-name="org.testng.reporters.XMLReporter"/>
+    </listeners>
+</suite>
