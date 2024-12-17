@@ -1,101 +1,129 @@
 pipeline {
     agent any
 
+    // Define tools needed for the pipeline
     tools {
         maven 'Maven 3.9.5'
         jdk 'JDK 21'
     }
 
+    // Define options to customize pipeline behavior
+    options {
+        // Add timestamps to console output
+        timestamps()
+        // Enable stage timing in the Jenkins UI
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        // Disable concurrent builds
+        disableConcurrentBuilds()
+    }
+
+    // Environment variables for project configuration
     environment {
-        // Define project directories
         UI_PROJECT_DIR = 'Functional_Testing'
         API_PROJECT_DIR = 'API_Testing'
+        // Add report directories for better organization
+        REPORT_DIR = 'test-reports'
+        CUCUMBER_REPORT_DIR = "${REPORT_DIR}/cucumber-reports"
     }
 
     stages {
-        stage('Preparation') {
+        stage('Initialize') {
             steps {
-                script {
-                    // Clean workspace and provide detailed logging
-                    cleanWs()
-                    echo "🚀 Initializing Comprehensive Test Automation Pipeline"
-                    echo "🔍 Preparing to run both UI and API tests"
-                }
-                
-                // Checkout dev branch
+                // Clean workspace and checkout code
+                cleanWs()
+                echo "🚀 Starting Test Automation Pipeline"
                 git branch: 'dev', url: 'https://github.com/Group45-ITQA/Group_45.git'
             }
         }
 
-        stage('Validate Project Structure') {
+        stage('Project Validation') {
             steps {
                 script {
-                    // Check if project directories exist
-                    def uiProjectExists = fileExists env.UI_PROJECT_DIR
-                    def apiProjectExists = fileExists env.API_PROJECT_DIR
-
-                    if (!uiProjectExists) {
-                        error "❌ UI Testing project directory not found: ${env.UI_PROJECT_DIR}"
+                    // Validate project structure
+                    if (!fileExists(env.UI_PROJECT_DIR)) {
+                        error "❌ UI Testing directory not found: ${env.UI_PROJECT_DIR}"
                     }
-
-                    if (!apiProjectExists) {
-                        error "❌ API Testing project directory not found: ${env.API_PROJECT_DIR}"
+                    if (!fileExists(env.API_PROJECT_DIR)) {
+                        error "❌ API Testing directory not found: ${env.API_PROJECT_DIR}"
                     }
+                    
+                    // Create report directories
+                    sh "mkdir -p ${env.REPORT_DIR}"
+                    sh "mkdir -p ${env.CUCUMBER_REPORT_DIR}"
                 }
             }
         }
 
-        stage('Compile Projects') {
+        stage('Dependencies') {
             parallel {
-                stage('Compile UI Project') {
+                stage('UI Dependencies') {
                     steps {
                         dir(env.UI_PROJECT_DIR) {
-                            bat 'mvn clean compile'
+                            bat 'mvn clean install -DskipTests'
                         }
                     }
                 }
-
-                stage('Compile API Project') {
+                stage('API Dependencies') {
                     steps {
                         dir(env.API_PROJECT_DIR) {
-                            bat 'mvn clean compile'
+                            bat 'mvn clean install -DskipTests'
                         }
                     }
                 }
             }
         }
 
-        stage('Run Comprehensive Test Suites') {
+        stage('Execute Tests') {
             parallel {
-                stage('UI Functional Tests') {
-                    steps {
-                        dir(env.UI_PROJECT_DIR) {
-                            bat 'mvn test -Dcucumber.filter.tags="@UIRegression"'
+                stage('UI Tests') {
+                    stages {
+                        stage('Run UI Tests') {
+                            steps {
+                                dir(env.UI_PROJECT_DIR) {
+                                    bat 'mvn test -Dcucumber.filter.tags="@UIRegression"'
+                                }
+                            }
                         }
-                    }
-                    post {
-                        always {
-                            dir(env.UI_PROJECT_DIR) {
-                                // Corrected TestNG reporting
-                                step([$class: 'TestNGPublisher', 
-                                      reportFilenamePattern: '**/target/surefire-reports/testng-results.xml'])
+                        stage('UI Test Reports') {
+                            steps {
+                                dir(env.UI_PROJECT_DIR) {
+                                    // Publish TestNG results
+                                    step([$class: 'TestNGPublisher',
+                                          reportFilenamePattern: '**/target/surefire-reports/testng-results.xml'])
+                                    
+                                    // Publish Cucumber reports
+                                    cucumber buildStatus: 'UNSTABLE',
+                                            reportTitle: 'UI Test Report',
+                                            fileIncludePattern: '**/cucumber-reports/*.json',
+                                            trendsLimit: 10
+                                }
                             }
                         }
                     }
                 }
-
-                stage('API Integration Tests') {
-                    steps {
-                        dir(env.API_PROJECT_DIR) {
-                            bat 'mvn test -Dcucumber.filter.tags="@APIRegression"'
+                
+                stage('API Tests') {
+                    stages {
+                        stage('Run API Tests') {
+                            steps {
+                                dir(env.API_PROJECT_DIR) {
+                                    bat 'mvn test -Dcucumber.filter.tags="@APIRegression"'
+                                }
+                            }
                         }
-                    }
-                    post {
-                        always {
-                            dir(env.API_PROJECT_DIR) {
-                                // Corrected TestNG reporting
-                                step([$class: 'TestNGPublisher', 
-                                      reportFilenamePattern: '**/target/surefire-reports/testng-results.xml'])
+                        stage('API Test Reports') {
+                            steps {
+                                dir(env.API_PROJECT_DIR) {
+                                    // Publish TestNG results
+                                    step([$class: 'TestNGPublisher',
+                                          reportFilenamePattern: '**/target/surefire-reports/testng-results.xml'])
+                                    
+                                    // Publish Cucumber reports
+                                    cucumber buildStatus: 'UNSTABLE',
+                                            reportTitle: 'API Test Report',
+                                            fileIncludePattern: '**/cucumber-reports/*.json',
+                                            trendsLimit: 10
+                                }
                             }
                         }
                     }
@@ -103,11 +131,13 @@ pipeline {
             }
         }
 
-        stage('Generate Comprehensive Reports') {
+        stage('Consolidate Reports') {
             steps {
                 script {
-                    echo "📊 Consolidating Test Reports"
-                    // You might want to use specific reporting plugins here
+                    echo "📊 Generating Combined Test Reports"
+                    // Archive the test reports
+                    archiveArtifacts artifacts: '**/target/surefire-reports/**/*.*,**/cucumber-reports/**/*.*',
+                                   allowEmptyArchive: true
                 }
             }
         }
@@ -116,25 +146,20 @@ pipeline {
     post {
         always {
             script {
-                // Cleanup and final status
+                // Clean workspace
                 cleanWs()
-                
-                // Enhanced status notification
                 def testStatus = currentBuild.result ?: 'SUCCESS'
                 echo "🏁 Pipeline completed with status: ${testStatus}"
             }
         }
-        
         success {
-            echo '✅ Both UI and API tests completed successfully!'
+            echo '✅ All test suites completed successfully!'
         }
-        
         failure {
-            echo '❌ Test execution encountered failures. Please review reports.'
+            echo '❌ Test execution failed. Please check the reports for details.'
         }
-        
         unstable {
-            echo '⚠️ Some tests failed or were unstable. Requires investigation.'
+            echo '⚠️ Test execution was unstable. Some tests may have failed.'
         }
     }
 }
