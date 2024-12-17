@@ -76,11 +76,9 @@ pipeline {
                     post {
                         always {
                             dir(env.UI_PROJECT_DIR) {
-                                junit '**/target/surefire-reports/*.xml'
-                                testNG(
-                                    reportFilenamePattern: '**/target/surefire-reports/testng-results.xml',
-                                    reportName: 'UI Functional Test Results'
-                                )
+                                // Corrected TestNG reporting
+                                step([$class: 'TestNGPublisher', 
+                                      reportFilenamePattern: '**/target/surefire-reports/testng-results.xml'])
                             }
                         }
                     }
@@ -95,11 +93,9 @@ pipeline {
                     post {
                         always {
                             dir(env.API_PROJECT_DIR) {
-                                junit '**/target/surefire-reports/*.xml'
-                                testNG(
-                                    reportFilenamePattern: '**/target/surefire-reports/testng-results.xml',
-                                    reportName: 'API Integration Test Results'
-                                )
+                                // Corrected TestNG reporting
+                                step([$class: 'TestNGPublisher', 
+                                      reportFilenamePattern: '**/target/surefire-reports/testng-results.xml'])
                             }
                         }
                     }
