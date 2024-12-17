@@ -21,8 +21,8 @@ pipeline {
                         dir('Functional_Testing') {
                             // Verify testng.xml exists before running tests
                             script {
-                                if (!fileExists('testng.xml')) {
-                                    error 'testng.xml not found in Functional_Testing directory'
+                                if (!fileExists('testing.xml')) {
+                                    error 'testing.xml not found in Functional_Testing directory'
                                 }
                             }
                             bat 'mvn clean test'
