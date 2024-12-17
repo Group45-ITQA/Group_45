@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Get Code') {
             steps {
-                // Clean workspace and get code from GitHub
                 cleanWs()
                 git branch: 'dev', url: 'https://github.com/Group45-ITQA/Group_45.git'
             }
@@ -17,16 +16,20 @@ pipeline {
 
         stage('Run Tests') {
             parallel {
-                // Run UI tests
                 stage('UI Tests') {
                     steps {
                         dir('Functional_Testing') {
+                            // Verify testng.xml exists before running tests
+                            script {
+                                if (!fileExists('testng.xml')) {
+                                    error 'testng.xml not found in Functional_Testing directory'
+                                }
+                            }
                             bat 'mvn clean test'
                         }
                     }
                 }
                 
-                // Run API tests
                 stage('API Tests') {
                     steps {
                         dir('API_Testing') {
@@ -39,7 +42,12 @@ pipeline {
     }
 
     post {
-        // Clean up after we're done
+        success {
+            echo 'All tests completed successfully!'
+        }
+        failure {
+            echo 'Some tests failed - check the test results for details'
+        }
         always {
             cleanWs()
         }
