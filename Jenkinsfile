@@ -6,20 +6,6 @@ pipeline {
         jdk 'JDK 21'
     }
 
-    // Enhanced parameters to control test execution
-    parameters {
-        choice(
-            name: 'TEST_SCOPE', 
-            choices: ['All', 'UI', 'API'], 
-            description: 'Select which tests to run'
-        )
-        booleanParam(
-            name: 'GENERATE_REPORTS', 
-            defaultValue: true, 
-            description: 'Generate comprehensive test reports'
-        )
-    }
-
     environment {
         // Define project directories
         UI_PROJECT_DIR = 'Functional_Testing'
@@ -32,12 +18,12 @@ pipeline {
                 script {
                     // Clean workspace and provide detailed logging
                     cleanWs()
-                    echo "Preparing test environment..."
-                    echo "Selected Test Scope: ${params.TEST_SCOPE}"
+                    echo "🚀 Initializing Comprehensive Test Automation Pipeline"
+                    echo "🔍 Preparing to run both UI and API tests"
                 }
                 
-                // Checkout repository
-                git branch: 'main', url: 'https://github.com/Group45-ITQA/Group_45.git'
+                // Checkout dev branch
+                git branch: 'dev', url: 'https://github.com/Group45-ITQA/Group_45.git'
             }
         }
 
@@ -49,24 +35,19 @@ pipeline {
                     def apiProjectExists = fileExists env.API_PROJECT_DIR
 
                     if (!uiProjectExists) {
-                        error "UI Testing project directory not found: ${env.UI_PROJECT_DIR}"
+                        error "❌ UI Testing project directory not found: ${env.UI_PROJECT_DIR}"
                     }
 
                     if (!apiProjectExists) {
-                        error "API Testing project directory not found: ${env.API_PROJECT_DIR}"
+                        error "❌ API Testing project directory not found: ${env.API_PROJECT_DIR}"
                     }
                 }
             }
         }
 
-        stage('Compile and Validate Projects') {
+        stage('Compile Projects') {
             parallel {
                 stage('Compile UI Project') {
-                    when {
-                        expression { 
-                            params.TEST_SCOPE == 'All' || params.TEST_SCOPE == 'UI' 
-                        }
-                    }
                     steps {
                         dir(env.UI_PROJECT_DIR) {
                             bat 'mvn clean compile'
@@ -75,11 +56,6 @@ pipeline {
                 }
 
                 stage('Compile API Project') {
-                    when {
-                        expression { 
-                            params.TEST_SCOPE == 'All' || params.TEST_SCOPE == 'API' 
-                        }
-                    }
                     steps {
                         dir(env.API_PROJECT_DIR) {
                             bat 'mvn clean compile'
@@ -89,14 +65,9 @@ pipeline {
             }
         }
 
-        stage('Run Test Suites') {
+        stage('Run Comprehensive Test Suites') {
             parallel {
                 stage('UI Functional Tests') {
-                    when {
-                        expression { 
-                            params.TEST_SCOPE == 'All' || params.TEST_SCOPE == 'UI' 
-                        }
-                    }
                     steps {
                         dir(env.UI_PROJECT_DIR) {
                             bat 'mvn test -Dcucumber.filter.tags="@UIRegression"'
@@ -105,6 +76,7 @@ pipeline {
                     post {
                         always {
                             dir(env.UI_PROJECT_DIR) {
+                                junit '**/target/surefire-reports/*.xml'
                                 testNG(
                                     reportFilenamePattern: '**/target/surefire-reports/testng-results.xml',
                                     reportName: 'UI Functional Test Results'
@@ -115,11 +87,6 @@ pipeline {
                 }
 
                 stage('API Integration Tests') {
-                    when {
-                        expression { 
-                            params.TEST_SCOPE == 'All' || params.TEST_SCOPE == 'API' 
-                        }
-                    }
                     steps {
                         dir(env.API_PROJECT_DIR) {
                             bat 'mvn test -Dcucumber.filter.tags="@APIRegression"'
@@ -128,6 +95,7 @@ pipeline {
                     post {
                         always {
                             dir(env.API_PROJECT_DIR) {
+                                junit '**/target/surefire-reports/*.xml'
                                 testNG(
                                     reportFilenamePattern: '**/target/surefire-reports/testng-results.xml',
                                     reportName: 'API Integration Test Results'
@@ -140,13 +108,10 @@ pipeline {
         }
 
         stage('Generate Comprehensive Reports') {
-            when {
-                expression { params.GENERATE_REPORTS }
-            }
             steps {
                 script {
+                    echo "📊 Consolidating Test Reports"
                     // You might want to use specific reporting plugins here
-                    echo "Generating comprehensive test reports..."
                 }
             }
         }
@@ -160,17 +125,16 @@ pipeline {
                 
                 // Enhanced status notification
                 def testStatus = currentBuild.result ?: 'SUCCESS'
-                echo "Pipeline completed with status: ${testStatus}"
+                echo "🏁 Pipeline completed with status: ${testStatus}"
             }
         }
         
         success {
-            echo '✅ All tests completed successfully!'
+            echo '✅ Both UI and API tests completed successfully!'
         }
         
         failure {
             echo '❌ Test execution encountered failures. Please review reports.'
-            // Optional: Send notifications (email, Slack, etc.)
         }
         
         unstable {
