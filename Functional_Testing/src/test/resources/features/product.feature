@@ -7,3 +7,4 @@ Feature: Product Cart Functionality
     Given I am on the products page
     When I add a product to the cart
     Then the cart count should be "1"
+
