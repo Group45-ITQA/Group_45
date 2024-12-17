@@ -1,5 +1,6 @@
 package com.qa.steps;
 
+import com.qa.pages.LoginPage;
 import io.cucumber.java.en.*;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -10,6 +11,7 @@ import com.qa.utils.DriverManager;
 
 public class ProductSteps {
     private ProductPage productPage;
+    LoginPage loginPage = new LoginPage();
 
     @Before
     public void setup() {
@@ -18,7 +20,7 @@ public class ProductSteps {
 
     @Given("I am on the products page")
     public void i_am_on_products_page() {
-        productPage.loginAndNavigate();
+        loginPage.login();
     }
 
     @When("I add a product to the cart")

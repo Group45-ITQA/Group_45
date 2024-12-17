@@ -27,15 +27,6 @@ public class ProductPage {
         PageFactory.initElements(driver, this);
     }
 
-    // Handles initial login and navigation
-    public void loginAndNavigate() {
-        driver.get("https://www.saucedemo.com/");
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
-        sleep(1); // Brief wait for page load
-    }
-
     // Adds the product to cart
     public void addProductToCart() {
         addToCartButton.click();

@@ -1,6 +1,5 @@
 # Ignore Maven target directories
-Funtional_Testing/target/
-API_Testing/target/
+**/target/
 
 # Ignore logs
 *.log
