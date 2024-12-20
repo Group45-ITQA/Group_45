@@ -1,0 +1,22 @@
+[
+  {
+    "name": "API Response Failures",
+    "messageRegex": ".*Response status.*",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Authentication Issues",
+    "messageRegex": ".*401.*|.*403.*|.*unauthorized.*|.*forbidden.*",
+    "matchedStatuses": ["broken", "failed"]
+  },
+  {
+    "name": "Data Validation Failures",
+    "messageRegex": ".*assertion.*|.*AssertionError.*|.*expected.*but was.*",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Test Framework Issues",
+    "traceRegex": ".*NullPointerException.*",
+    "matchedStatuses": ["broken"]
+  }
+]
