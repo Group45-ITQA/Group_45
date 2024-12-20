@@ -7,17 +7,10 @@ import org.testng.Assert;
 import com.qa.utils.DriverManager;
 
 public class CartSteps {
-    private CartPage cartPage;
-    private LoginPage loginPage = new LoginPage();
-
-    @Given("I am logged in as a problem user")
-    public void i_am_logged_in_as_a_standard_user() {
-        loginPage.login();
-    }
+    private CartPage cartPage = new CartPage();
 
     @When("my shopping cart is empty")
     public void my_shopping_cart_is_empty() {
-        cartPage = new CartPage();
         cartPage.goToCartPage();
         // Ensure the cart is empty (if not, remove all items)
         if (cartPage.isItemInCart("Sauce Labs Backpack")) {
