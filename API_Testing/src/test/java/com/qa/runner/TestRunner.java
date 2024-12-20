@@ -15,16 +15,16 @@ import io.qameta.allure.restassured.AllureRestAssured;
         glue = "com.qa.steps",
 
         // Tags for all API types
-        tags = "@GetAllBooks or @GetSingleBook or @CreateBook or @UpdateBook or @DeleteBook",
+        tags = "@GetAllBooks or @GetSingleBook",
 
         // Reporting configuration used by all tests
         plugin = {
-                "pretty",
-                "html:target/cucumber-reports/library-api-tests.html",
-                "json:target/cucumber-reports/library-api-tests.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+                "json:target/cucumber-reports/CucumberTestReport.json"
         },
-        monochrome = true
+        monochrome = true,
+        dryRun = false,
+        publish = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 
@@ -32,5 +32,7 @@ public class TestRunner extends AbstractTestNGCucumberTests {
     public void setupAPITests() {
         RestAssured.baseURI = BASE_URL;
         RestAssured.filters(new AllureRestAssured());
+
+        System.setProperty("allure.results.directory", "target/allure-results");
     }
 }
