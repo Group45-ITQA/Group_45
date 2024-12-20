@@ -11,7 +11,7 @@ public class CartSteps {
     private LoginPage loginPage = new LoginPage();
 
     @Given("I am logged in as a problem user")
-    public void i_am_logged_in_as_a_standard_user() {
+    public void i_am_logged_in_as_a_problem_user() {
         loginPage.login();
     }
 
