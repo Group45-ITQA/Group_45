@@ -8,15 +8,9 @@ import io.cucumber.java.en.*;
 import org.testng.Assert;
 
 public class CheckoutSteps {
-    private LoginPage loginPage = new LoginPage();
     private ProductPage productPage;
     private CartPage cartPage;
     private CheckoutPage checkoutPage;
-
-    @Given("I am logged in as a problem user")
-    public void i_am_logged_in_as_a_problem_user() {
-        loginPage.login();
-    }
 
     @Given("I have an item in my cart")
     public void i_have_an_item_in_my_cart() {

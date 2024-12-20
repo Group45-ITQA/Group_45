@@ -13,8 +13,8 @@ public class CartPage {
     @FindBy(id = "checkout")
     private WebElement checkoutButton;
 
-    @FindBy(className = "shopping_cart_badge")
-    private WebElement cartBadge;
+//    @FindBy(className = "shopping_cart_badge")
+//    private WebElement cartBadge;
 
     @FindBy(className = "error-message-container")
     private WebElement errorMessage;
