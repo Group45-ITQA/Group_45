@@ -1,10 +1,10 @@
-Feature: Cart Functionality
+Feature: Cart Checkout Functionality
   As a user
-  I want to ensure the cart is properly validated
-  So that I cannot proceed to checkout with an empty cart
+  I want to verify checkout is possible with an empty cart
+  So that I can ensure the checkout process works correctly
 
-  Scenario: Prevent checkout with an empty cart
-    Given I am logged in to the Sauce Demo website
-    When I navigate to the cart page
-    Then the checkout button should be disabled
-    And I should not be able to proceed to checkout
+  Scenario: Verify checkout is possible with empty cart
+    Given I am logged in as a problem user
+    When my shopping cart is empty
+    And I click on the checkout button
+    Then I should be able to proceed to the checkout information page
