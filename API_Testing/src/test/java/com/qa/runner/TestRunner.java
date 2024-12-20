@@ -5,6 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.BeforeClass;
 import io.restassured.RestAssured;
 import static com.qa.config.TestConfig.*;
+import io.qameta.allure.restassured.AllureRestAssured;
 
 @CucumberOptions(
         // Feature files location - for all team members
@@ -21,7 +22,7 @@ import static com.qa.config.TestConfig.*;
                 "pretty",
                 "html:target/cucumber-reports/library-api-tests.html",
                 "json:target/cucumber-reports/library-api-tests.json",
-                "testng:target/testng-cucumber-reports/library-api-tests.xml"
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
         },
         monochrome = true
 )
@@ -30,6 +31,6 @@ public class TestRunner extends AbstractTestNGCucumberTests {
     @BeforeClass(alwaysRun = true)
     public void setupAPITests() {
         RestAssured.baseURI = BASE_URL;
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.filters(new AllureRestAssured());
     }
 }
