@@ -6,7 +6,7 @@ import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import io.qameta.allure.*;
 import com.qa.models.Book;
-import static io.restassured.RestAssured.given;
+import com.qa.testdata.TestDataSetup;
 import static com.qa.config.TestConfig.*;
 import com.qa.utils.*;
 
@@ -16,42 +16,43 @@ import com.qa.utils.*;
 public class GetBookByIdSteps {
     private RequestSpecification request;
     private Response response;
+    private Integer storedBookId; // Add this to store the ID
 
-    @Step("Setting up admin authentication for get book by ID")
-    @Given("I am authenticated as an admin user to get a specific book")  // Changed the text
+    @Given("I am authenticated as an admin user to get a specific book")
     public void setupAdminAuthentication() {
         request = AuthenticationUtils.getAuthenticatedRequest();
     }
 
-    @Step("Sending GET request to fetch book by ID")
-    @When("I send a request to get the book with ID {string}")
-    public void getBookById(String id) {
+    @Given("I have a valid book ID from the created books")
+    public void getValidBookId() {
+        storedBookId = TestDataSetup.getFirstBookId();
+        Assert.assertNotNull(storedBookId, "No test books were created successfully");
+    }
+
+    @When("I send a request to get the book with the stored ID")
+    public void getBookById() {
         response = request
                 .when()
-                .get(BOOKS_ENDPOINT + "/" + id);
+                .get(BOOKS_ENDPOINT + "/" + storedBookId);
 
         if (response != null && response.getBody() != null) {
             Allure.addAttachment("Response Body", response.getBody().asString());
         }
     }
 
-    @Step("Verifying response status code is {expectedStatusCode}")
     @Then("the get book by id response status code should be {int}")
     public void verifyResponseStatusCode(int expectedStatusCode) {
         ResponseValidator.verifyStatusCode(response, expectedStatusCode);
     }
 
-    @Step("Verifying book details in response")
     @Then("the response should contain valid book details")
     public void verifyBookDetails() {
         Book responseBook = response.as(Book.class);
 
         Assert.assertNotNull(responseBook, "Book should not be null");
         Assert.assertNotNull(responseBook.getId(), "Book ID should not be null");
-        Assert.assertNotNull(responseBook.getTitle(), "Book title should not be null");
-        Assert.assertNotNull(responseBook.getAuthor(), "Book author should not be null");
-
-        Assert.assertFalse(responseBook.getTitle().isEmpty(), "Book title should not be empty");
-        Assert.assertFalse(responseBook.getAuthor().isEmpty(), "Book author should not be empty");
+        Assert.assertEquals(responseBook.getId(), storedBookId, "Book ID should match the requested ID");
+        Assert.assertEquals(responseBook.getTitle(), "Test Book 1", "Book title should match");
+        Assert.assertEquals(responseBook.getAuthor(), "Test Author 1", "Book author should match");
     }
 }
