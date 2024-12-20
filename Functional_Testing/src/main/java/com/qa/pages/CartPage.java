@@ -22,7 +22,11 @@ public class CartPage {
     @FindBy(className = "shopping_cart_link")
     private WebElement cartLink;
 
+    @FindBy(id = "item_4_title_link")
+    private WebElement backpackItem;
 
+    @FindBy(id = "item_0_title_link")
+    private WebElement bikeLightItem;
 
     public CartPage() {
         this.driver = DriverManager.getDriver();
@@ -35,21 +39,21 @@ public class CartPage {
     }
 
     public void addItemToCart(String itemName) {
-        String xpath = String.format("//div[text()='%s']/ancestor::div[@class='inventory_item']//button", itemName);
-        driver.findElement(By.xpath(xpath)).click();
+        WebElement addItemButton = driver.findElement(By.id("add-to-cart-" + itemName.replace(" ", "-").toLowerCase()));
+        addItemButton.click();
         sleep(1);
     }
 
     public void removeItemFromCart(String itemName) {
-        String xpath = String.format("//div[text()='%s']/ancestor::div[@class='cart_item']//button[contains(@id,'remove')]", itemName);
-        driver.findElement(By.xpath(xpath)).click();
+        WebElement removeItemButton = driver.findElement(By.id("remove-" + itemName.replace(" ", "-").toLowerCase()));
+        removeItemButton.click();
         sleep(1);
     }
 
     public boolean isItemInCart(String itemName) {
         try {
-            String xpath = String.format("//div[text()='%s']", itemName);
-            return driver.findElement(By.xpath(xpath)).isDisplayed();
+            WebElement item = driver.findElement(By.id("item_" + itemName.replace(" ", "-").toLowerCase() + "_title_link"));
+            return item.isDisplayed();
         } catch (Exception e) {
             return false;
         }
