@@ -13,6 +13,17 @@ import java.util.List;
 public class ProductPage {
     private WebDriver driver;
 
+    @FindBy(className = "inventory_item")
+    private List<WebElement> inventoryItems;
+
+    public boolean verifyProductPageIsDisplayed() {
+        try {
+            return !inventoryItems.isEmpty() &&
+                    inventoryItems.get(0).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
     // Elements for adding product to cart
     @FindBy(id = "add-to-cart-sauce-labs-backpack")
     private WebElement addToCartButton;
