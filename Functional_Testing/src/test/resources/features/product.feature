@@ -5,9 +5,11 @@ Feature: Product Cart Functionality
   So that I can purchase them
 
   Background:
-    Given I am logged in and on the products page
+    Given I am logged in and on the products page for cart management
 
   @add_to_cart @critical
   Scenario: Add product to cart
     When I add a product to the cart
     Then the cart count should be "1"
+
+
