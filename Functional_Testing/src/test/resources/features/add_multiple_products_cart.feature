@@ -4,6 +4,6 @@ Feature: Multiple Products Cart Functionality
   So that I can purchase them together
 
   Scenario: Add multiple products to cart
-    Given I am logged in and on the products page
+    Given I am logged in on the products page for multiple products
     When I add 2 products to the cart
     Then I should see 2 products in the cart
