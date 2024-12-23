@@ -42,6 +42,12 @@ public class ProductPage {
     @FindBy(css = "[id^='remove']")
     private List<WebElement> removeButtons;
 
+    @FindBy(css = ".inventory_item_name")
+    private List<WebElement> productLinks;
+
+    @FindBy(css = ".inventory_details_name")
+    private WebElement productDetailName;
+
     private List<WebElement> workingProducts;
 
     // Shopping cart badge that shows number of items
@@ -154,5 +160,25 @@ public class ProductPage {
             }
         }
         return true;
+    }
+
+    public void clickProductLink(String productName) {
+        for (WebElement link : productLinks) {
+            if (link.getText().equals(productName)) {
+                link.click();
+                sleep(1);
+                return;
+            }
+        }
+        throw new RuntimeException("Product link not found: " + productName);
+    }
+
+    public boolean isCorrectProductDisplayed(String expectedProduct) {
+        try {
+            String actualProduct = productDetailName.getText();
+            return actualProduct.equals(expectedProduct);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
