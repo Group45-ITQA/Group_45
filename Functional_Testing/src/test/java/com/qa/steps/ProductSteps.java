@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 @Epic("Shopping Cart Features")
 @Feature("Product Cart Management")
+@Story("Product Cart Functionality")
 public class ProductSteps {
     private ProductPage productPage;
 
