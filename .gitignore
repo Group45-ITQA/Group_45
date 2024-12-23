@@ -8,6 +8,7 @@ misc.xml
 
 # Maven target directories
 **/target/
+target/
 
 # Common ignores
 *.log
@@ -15,3 +16,6 @@ misc.xml
 Thumbs.db
 /.idea
 .idea/workspace.xml
+
+allure-results/
+test-output/
