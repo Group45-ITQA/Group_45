@@ -18,7 +18,7 @@ public class MultipleProductCartSteps {
         loginPage = new LoginPage();
     }
 
-    @Given("I am logged in on the products page for multiple products\n")
+    @Given("I am logged in on the products page for multiple products")
     public void i_am_logged_in_on_products_page() {
         loginPage.login();
     }
