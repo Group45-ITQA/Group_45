@@ -21,11 +21,8 @@ import com.qa.testdata.TestDataSetup;
         // Reporting configuration used by all tests
         plugin = {
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
-                "json:target/cucumber-reports/CucumberTestReport.json",
                 "pretty",
-                "html:target/cucumber-reports/cucumber-pretty",
-                "rerun:target/failed_scenarios.txt",
-                "timeline:target/timeline-results"
+                "rerun:target/failed_scenarios.txt"
         },
         monochrome = true,
         dryRun = false,

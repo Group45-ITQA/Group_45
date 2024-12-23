@@ -8,11 +8,8 @@ import io.cucumber.testng.CucumberOptions;
         glue = "com.qa.steps",
         plugin = {
                 "pretty",
-                "html:target/cucumber-reports.html",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
-                "rerun:target/failed_scenarios.txt",
-                "timeline:target/timeline-results",
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+                "rerun:target/failed_scenarios.txt"
         },
           monochrome = true
 )
