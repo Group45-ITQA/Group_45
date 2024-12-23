@@ -77,73 +77,22 @@ jobs:
       run: mvn clean test -Dtest=com.qa.ui.**
       continue-on-error: true
 
-    # Debug step to check results
-    - name: Debug Test Results
+    # Combine test results
+    - name: Combine Allure Results
       if: always()
       run: |
-        echo "API Testing Results:"
-        ls -la API_Testing/target/allure-results || echo "API results not found"
-        echo "UI Testing Results:"
-        ls -la Functional_Testing/target/allure-results || echo "UI results not found"
+        mkdir -p allure-results
+        cp -r API_Testing/target/allure-results/* allure-results/ || true
+        cp -r Functional_Testing/target/allure-results/* allure-results/ || true
 
-    # Generate API Report
-    - name: Generate API Report
+    # Generate Allure Report
+    - name: Generate Allure Report
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        allure_results: API_Testing/target/allure-results
-        gh_pages: gh-pages
-        allure_report: allure-api-report
-        allure_history: allure-api-history
-
-    # Generate UI Report
-    - name: Generate UI Report
-      uses: simple-elf/allure-report-action@master
-      if: always()
-      with:
-        allure_results: Functional_Testing/target/allure-results
-        gh_pages: gh-pages
-        allure_report: allure-ui-report
-        allure_history: allure-ui-history
-
-   # Prepare reports for deployment
-    - name: Prepare reports for deployment
-      if: always()
-      run: |
-        sudo mkdir -p gh-pages
-        sudo chmod 777 gh-pages
-        sudo tee gh-pages/index.html > /dev/null << 'EOF'
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Test Reports</title>
-            <style>
-                body { font-family: Arial, sans-serif; padding: 20px; }
-                .report-link {
-                    display: inline-block;
-                    padding: 10px 20px;
-                    margin: 10px;
-                    background-color: #0366d6;
-                    color: white;
-                    text-decoration: none;
-                    border-radius: 5px;
-                }
-            </style>
-        </head>
-        <body>
-            <h1>Test Reports</h1>
-            <div>
-                <a class="report-link" href="./api">API Test Report</a>
-                <a class="report-link" href="./ui">UI Test Report</a>
-            </div>
-        </body>
-        </html>
-        EOF
-        
-       # Copy reports to deployment directory
-        sudo cp -r allure-api-history gh-pages/api || echo "No API reports found"
-        sudo cp -r allure-ui-history gh-pages/ui || echo "No UI reports found"
-        sudo chmod -R 777 gh-pages
+        allure_results: allure-results
+        allure_report: allure-report
+        allure_history: allure-history
 
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
@@ -152,16 +101,5 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: gh-pages
+        publish_dir: allure-history
         force_orphan: true
-
-    # Debug Deployment
-    - name: Debug Deployment Directory
-      if: always()
-      run: |
-        echo "Contents of gh-pages directory:"
-        ls -la gh-pages/
-        echo "Contents of API report directory:"
-        ls -la gh-pages/api || echo "API directory not found"
-        echo "Contents of UI report directory:"
-        ls -la gh-pages/ui || echo "UI directory not found"
