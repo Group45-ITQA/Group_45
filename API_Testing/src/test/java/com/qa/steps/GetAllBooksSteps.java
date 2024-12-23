@@ -11,7 +11,6 @@ import static org.hamcrest.Matchers.*;
 
 @Epic("LibraryAPI")
 @Feature("BookManagement")
-@Story("GetAllBooks")
 public class GetAllBooksSteps {
 
     private RequestSpecification request;
