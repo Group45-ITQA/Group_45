@@ -12,7 +12,7 @@ import com.qa.utils.*;
 
 @Epic("LibraryAPITesting")
 @Feature("BookManagement")
-@Owner("malithi")
+@story("GetSingleBook")
 public class GetBookByIdSteps {
     private RequestSpecification request;
     private Response response;
