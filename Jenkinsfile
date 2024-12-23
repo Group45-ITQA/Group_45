@@ -4,6 +4,12 @@ pipeline {
         maven 'Maven 3.9.5'
         jdk 'JDK 21'
     }
+    
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+        disableConcurrentBuilds()
+    }
+
     stages {
         stage('Get Code') {
             steps {
@@ -11,6 +17,27 @@ pipeline {
                 git branch: 'dev', url: 'https://github.com/Group45-ITQA/Group_45.git'
             }
         }
+
+        stage('Download Dependencies') {
+            parallel {
+                stage('UI Test Dependencies') {
+                    steps {
+                        dir('Functional_Testing') {
+                            // Download dependencies once
+                            bat 'mvn dependency:go-offline'
+                        }
+                    }
+                }
+                stage('API Test Dependencies') {
+                    steps {
+                        dir('API_Testing') {
+                            bat 'mvn dependency:go-offline'
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Run Tests') {
             parallel {
                 stage('UI Tests') {
@@ -21,7 +48,8 @@ pipeline {
                                     error 'testing.xml not found in Functional_Testing directory'
                                 }
                             }
-                            bat 'mvn clean test'
+                            // Use offline mode to avoid downloading dependencies again
+                            bat 'mvn clean test -o'
                         }
                     }
                     post {
@@ -41,23 +69,17 @@ pipeline {
                 stage('API Tests') {
                     steps {
                         script {
-                            // Start the JAR from root directory
                             bat 'start java -jar demo-0.0.1-SNAPSHOT.jar'
-                            // Wait for application to initialize
                             sleep(time: 30, unit: 'SECONDS')
                             
-                            // Run API tests
                             dir('API_Testing') {
-                                bat 'mvn clean test'
+                                bat 'mvn clean test -o'
                             }
                         }
                     }
                     post {
                         always {
-                            // Stop the JAR application
-                            bat 'taskkill /F /IM java.exe'
-                            
-                            // Generate reports
+                            bat 'taskkill /F /IM java.exe || exit 0'  // Added || exit 0 to prevent failure if process already stopped
                             junit '**/target/surefire-reports/*.xml'
                             allure([
                                 includeProperties: false,
