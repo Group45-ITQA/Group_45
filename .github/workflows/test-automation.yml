@@ -106,13 +106,13 @@ jobs:
         allure_report: allure-ui-report
         allure_history: allure-ui-history
 
-    # Prepare deployment directory
+   # Prepare reports for deployment
     - name: Prepare reports for deployment
       if: always()
       run: |
-        mkdir -p gh-pages
-        # Create main index.html
-        cat > gh-pages/index.html << 'EOF'
+        sudo mkdir -p gh-pages
+        sudo chmod 777 gh-pages
+        sudo tee gh-pages/index.html > /dev/null << 'EOF'
         <!DOCTYPE html>
         <html>
         <head>
@@ -140,9 +140,10 @@ jobs:
         </html>
         EOF
         
-        # Copy reports to deployment directory
-        cp -r allure-api-history gh-pages/api
-        cp -r allure-ui-history gh-pages/ui
+       # Copy reports to deployment directory
+        sudo cp -r allure-api-history gh-pages/api || echo "No API reports found"
+        sudo cp -r allure-ui-history gh-pages/ui || echo "No UI reports found"
+        sudo chmod -R 777 gh-pages
 
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
