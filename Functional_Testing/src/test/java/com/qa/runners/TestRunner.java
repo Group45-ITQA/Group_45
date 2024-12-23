@@ -9,9 +9,12 @@ import io.cucumber.testng.CucumberOptions;
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports.html",
-                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+                "rerun:target/failed_scenarios.txt",
+                "timeline:target/timeline-results",
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
-        tags = "@product"
+          monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 }

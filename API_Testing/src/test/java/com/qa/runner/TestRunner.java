@@ -23,7 +23,9 @@ import com.qa.testdata.TestDataSetup;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "json:target/cucumber-reports/CucumberTestReport.json",
                 "pretty",
-                "html:target/cucumber-reports/cucumber-pretty"
+                "html:target/cucumber-reports/cucumber-pretty",
+                "rerun:target/failed_scenarios.txt",
+                "timeline:target/timeline-results"
         },
         monochrome = true,
         dryRun = false,
@@ -36,7 +38,5 @@ public class TestRunner extends AbstractTestNGCucumberTests {
         RestAssured.baseURI = BASE_URL;
         RestAssured.filters(new AllureRestAssured());
         TestDataSetup.setupTestData();
-
-        System.setProperty("allure.results.directory", "target/allure-results");
     }
 }
