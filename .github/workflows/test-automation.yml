@@ -1,0 +1,104 @@
+name: Test Automation
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  test:
+    runs-on: windows-latest  # Using Windows as your Jenkins file uses batch commands
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+    
+    # Download dependencies for both projects
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    
+    - name: Download UI Test Dependencies
+      run: |
+        cd Functional_Testing
+        mvn dependency:go-offline
+        
+    - name: Download API Test Dependencies
+      run: |
+        cd API_Testing
+        mvn dependency:go-offline
+        
+    # Start the API application
+    - name: Start API Application
+      run: |
+        start java -jar demo-0.0.1-SNAPSHOT.jar
+        timeout /t 30 /nobreak
+      
+    # Run UI Tests
+    - name: Run UI Tests
+      run: |
+        cd Functional_Testing
+        mvn clean test
+        
+    # Run API Tests
+    - name: Run API Tests
+      run: |
+        cd API_Testing
+        mvn clean test
+        
+    # Stop the API application
+    - name: Stop API Application
+      if: always()
+      run: |
+        taskkill /F /IM java.exe || exit 0
+        
+    # Generate and publish Allure reports
+    - name: Get Allure history
+      uses: actions/checkout@v3
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
+    
+    - name: Generate Allure Report
+      uses: simple-elf/allure-report-action@master
+      if: always()
+      id: allure-report
+      with:
+        allure_results: |
+          Functional_Testing/target/allure-results
+          API_Testing/target/allure-results
+        gh_pages: gh-pages
+        allure_report: allure-report
+        allure_history: allure-history
+        keep_reports: 20
+        
+    - name: Deploy report to Github Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
+        
+    # Archive test results
+    - name: Archive test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: |
+          **/target/surefire-reports
+          **/target/allure-results
