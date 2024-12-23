@@ -77,7 +77,7 @@ jobs:
       run: mvn clean test -Dtest=com.qa.ui.**
       continue-on-error: true
 
-    # Generate Separate Allure Reports
+   # Generate Separate Allure Reports
     - name: Generate Allure API Report
       uses: simple-elf/allure-report-action@master
       if: always()
