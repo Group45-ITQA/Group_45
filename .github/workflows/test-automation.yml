@@ -22,28 +22,21 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    # Build the application
-    - name: Build Application
-      run: mvn clean package -DskipTests
-    
-    # Start API Application
+    # Start API Application from root directory where JAR exists
     - name: Start API Application
       run: |
-        cd target/
         java -jar demo-0.0.1-SNAPSHOT.jar &
         sleep 30  # Wait for application to start
     
-    # Run API Tests
+    # Run API Tests from API_Testing directory
     - name: Run API Tests
-      run: |
-        cd API_Testing
-        mvn clean test
+      working-directory: ./API_Testing
+      run: mvn clean test
         
-    # Run UI Tests
+    # Run UI Tests from Functional_Testing directory
     - name: Run UI Tests
-      run: |
-        cd Functional_Testing
-        mvn clean test
+      working-directory: ./Functional_Testing
+      run: mvn clean test
     
     # Stop API application
     - name: Stop API Application
