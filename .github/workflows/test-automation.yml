@@ -77,61 +77,88 @@ jobs:
       run: mvn clean test -Dtest=com.qa.ui.**
       continue-on-error: true
 
-   # Generate Separate Allure Reports
-    - name: Generate Allure API Report
+    # Create directories for combined reports
+    - name: Prepare Report Directories
+      if: always()
+      run: |
+        mkdir -p combined-reports/api
+        mkdir -p combined-reports/ui
+        cp -r API_Testing/target/allure-results/* combined-reports/api/ || true
+        cp -r Functional_Testing/target/allure-results/* combined-reports/ui/ || true
+
+    # Generate report for API tests
+    - name: Generate API Report
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        allure_results: API_Testing/target/allure-results
+        allure_results: combined-reports/api
         gh_pages: gh-pages
         allure_report: allure-report/api
         allure_history: allure-history/api
-        keep_reports: 20
-    
-    - name: Generate Allure UI Report
+
+    # Generate report for UI tests
+    - name: Generate UI Report
       uses: simple-elf/allure-report-action@master
       if: always()
       with:
-        allure_results: Functional_Testing/target/allure-results
+        allure_results: combined-reports/ui
         gh_pages: gh-pages
         allure_report: allure-report/ui
         allure_history: allure-history/ui
-        keep_reports: 20
 
-    # Deploy reports to Github Pages
-    - name: Deploy API Report to Github Pages
+    # Create index.html for GitHub Pages
+    - name: Create index page
+      if: always()
+      run: |
+        mkdir -p published-reports
+        cat > published-reports/index.html << 'EOF'
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Test Reports</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 40px; }
+                .button {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    margin: 10px;
+                    background-color: #007bff;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 5px;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Test Reports</h1>
+            <a class="button" href="./api/">API Test Report</a>
+            <a class="button" href="./ui/">UI Test Report</a>
+        </body>
+        </html>
+        EOF
+
+    # Move reports to publishing directory
+    - name: Prepare reports for publishing
+      if: always()
+      run: |
+        cp -r allure-history/api published-reports/api
+        cp -r allure-history/ui published-reports/ui
+
+    # Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: allure-history/api
-        force_orphan: false
-        keep_files: true
-    
-    - name: Deploy UI Report to Github Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: always()
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history/ui
-        force_orphan: false
-        keep_files: true
+        publish_dir: published-reports
+        force_orphan: true
 
-    # Upload Artifacts (Optional but helpful for debugging)
-    - name: Upload Allure API Report
+    # Upload artifacts for debugging
+    - name: Upload Raw Results
       uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: allure-report-api
-        path: allure-report/api/
-        retention-days: 30
-    
-    - name: Upload Allure UI Report
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: allure-report-ui
-        path: allure-report/ui/
-        retention-days: 30
+        name: allure-raw-results
+        path: combined-reports/
+        retention-days: 7
