@@ -1,17 +1,14 @@
 name: Test Automation
-
 on:
   push:
     branches: [ main, dev ]
   pull_request:
     branches: [ main, dev ]
   workflow_dispatch:
-
 permissions:
   contents: write
   pages: write
   id-token: write
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -25,9 +22,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
+    # Build the application
+    - name: Build Application
+      run: mvn clean package -DskipTests
+    
     # Start API Application
     - name: Start API Application
       run: |
+        cd target/
         java -jar demo-0.0.1-SNAPSHOT.jar &
         sleep 30  # Wait for application to start
     
@@ -49,7 +51,7 @@ jobs:
       run: |
         pkill java || true
         
-    # Generate Allure Report combining both test results
+    # Generate Allure Report
     - name: Generate Allure Report
       if: always()
       uses: simple-elf/allure-report-action@master
