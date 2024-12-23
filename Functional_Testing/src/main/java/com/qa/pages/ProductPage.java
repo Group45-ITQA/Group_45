@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ProductPage {
             return false;
         }
     }
-    // Elements for adding product to cart
+    //////////////////////////////// Elements for adding product to cart/////////////////////////////////
     @FindBy(id = "add-to-cart-sauce-labs-backpack")
     private WebElement addToCartButton;
 
@@ -46,8 +47,6 @@ public class ProductPage {
     // Shopping cart badge that shows number of items
     @FindBy(className = "shopping_cart_badge")
     private WebElement cartBadge;
-
-
 
     public ProductPage() {
         this.driver = DriverManager.getDriver();
@@ -117,5 +116,43 @@ public class ProductPage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+/////////////////////Filter Option Elements////////////////////
+
+    @FindBy(className = "product_sort_container")
+    private WebElement filterDropdown;
+
+    @FindBy(className = "inventory_item_price")
+    private List<WebElement> productPrices;
+
+    public void selectFilter(String filterOption) {
+        try {
+            Select dropdown = new Select(filterDropdown);
+            dropdown.selectByVisibleText(filterOption);  // Changed to selectByVisibleText
+            // Common values are: "Price (low to high)", "Price (high to low)",
+            // "Name (A to Z)", "Name (Z to A)"
+            sleep(1); // Wait for filter to apply
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to select filter option: " + filterOption);
+        }
+    }
+
+    public boolean verifyPriceLowToHighFilter() {
+        List<Double> prices = new ArrayList<>();
+        for (WebElement priceElement : productPrices) {
+            // Remove '$' and convert to double
+            String priceText = priceElement.getText().replace("$", "");
+            prices.add(Double.parseDouble(priceText));
+        }
+
+        // Check if prices are sorted in ascending order
+        for (int i = 0; i < prices.size() - 1; i++) {
+            if (prices.get(i) > prices.get(i + 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
