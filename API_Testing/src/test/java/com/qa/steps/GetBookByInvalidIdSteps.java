@@ -10,7 +10,6 @@ import static com.qa.config.TestConfig.*;
 
 @Epic("LibraryAPI Testing")
 @Feature("Book Management")
-@story("GetSingleBook")
 public class GetBookByInvalidIdSteps {
     private RequestSpecification request;
     private Response response;

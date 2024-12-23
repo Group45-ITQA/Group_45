@@ -12,7 +12,6 @@ import com.qa.utils.*;
 
 @Epic("LibraryAPITesting")
 @Feature("BookManagement")
-@story("GetSingleBook")
 public class GetBookByIdSteps {
     private RequestSpecification request;
     private Response response;
