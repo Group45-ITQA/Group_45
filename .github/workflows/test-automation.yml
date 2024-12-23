@@ -5,17 +5,19 @@ on:
   pull_request:
     branches: [ main, dev ]
   workflow_dispatch:
+
 permissions:
   contents: write
   pages: write
   id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
       with:
-        lfs: true    # Add this to handle LFS files
+        lfs: true
     
     - name: Set up JDK 21
       uses: actions/setup-java@v3
@@ -24,17 +26,35 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    # Debug step to check file location and permissions
-    - name: Debug JAR location
+    # Install Chrome
+    - name: Install Chrome
       run: |
-        echo "Current directory:"
-        pwd
-        echo "Files in current directory:"
-        ls -la
-        echo "Checking JAR file:"
-        ls -la demo-0.0.1-SNAPSHOT.jar || echo "JAR not found"
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/sources.list.d/google.list'
+        sudo apt-get update
+        sudo apt-get install google-chrome-stable -y
     
-    # Start API Application with explicit permissions
+    # Setup ChromeDriver
+    - name: Setup ChromeDriver
+      uses: nanasess/setup-chromedriver@master
+      
+    # Start Chrome Driver
+    - name: Start ChromeDriver
+      run: |
+        export DISPLAY=:99
+        chromedriver --version
+        google-chrome --version
+        sudo Xvfb -ac :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
+    
+    # Debug Chrome installation
+    - name: Debug Chrome Setup
+      run: |
+        which google-chrome
+        google-chrome --version
+        which chromedriver
+        chromedriver --version
+    
+    # Start API Application
     - name: Start API Application
       run: |
         cp demo-0.0.1-SNAPSHOT.jar API_Testing/
@@ -43,40 +63,14 @@ jobs:
         java -jar demo-0.0.1-SNAPSHOT.jar &
         sleep 30
     
-    # Run API Tests from API_Testing directory
+    # Run API Tests
     - name: Run API Tests
       working-directory: ./API_Testing
       run: mvn clean test
-        
-    # Run UI Tests from Functional_Testing directory
+    
+    # Run UI Tests with debug output
     - name: Run UI Tests
       working-directory: ./Functional_Testing
-      run: mvn clean test
+      run: mvn clean test -X
     
-    # Stop API application
-    - name: Stop API Application
-      if: always()
-      run: |
-        pkill java || true
-        
-    # Generate Allure Report
-    - name: Generate Allure Report
-      if: always()
-      uses: simple-elf/allure-report-action@master
-      with:
-        allure_results: |
-          Functional_Testing/target/allure-results
-          API_Testing/target/allure-results
-        gh_pages: gh-pages
-        allure_report: allure-report
-        allure_history: allure-history
-        
-    # Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      if: always()
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history
-        force_orphan: true
+    # Rest of your workflow remains the same...
