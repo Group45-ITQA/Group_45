@@ -22,11 +22,22 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    # Start API Application from root directory where JAR exists
+    # Debug step to check file location and permissions
+    - name: Debug JAR location
+      run: |
+        echo "Current directory:"
+        pwd
+        echo "Files in current directory:"
+        ls -la
+        echo "Checking JAR file:"
+        ls -la demo-0.0.1-SNAPSHOT.jar || echo "JAR not found"
+    
+    # Start API Application with explicit permissions
     - name: Start API Application
       run: |
+        chmod +x demo-0.0.1-SNAPSHOT.jar || echo "chmod failed"
         java -jar demo-0.0.1-SNAPSHOT.jar &
-        sleep 30  # Wait for application to start
+        sleep 30
     
     # Run API Tests from API_Testing directory
     - name: Run API Tests
