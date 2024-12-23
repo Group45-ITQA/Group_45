@@ -70,6 +70,15 @@ jobs:
       working-directory: ./API_Testing
       run: mvn clean test -Dtest=com.qa.api.**
       continue-on-error: true
+
+    # Debug API Test Results
+    - name: Debug API Results
+      if: always()
+      run: |
+        echo "API Test Results Content:"
+        ls -R API_Testing/target/allure-results/
+        echo "Number of API result files:"
+        find API_Testing/target/allure-results -type f | wc -l
     
     # Run UI Tests
     - name: Run UI Tests
@@ -77,13 +86,26 @@ jobs:
       run: mvn clean test -Dtest=com.qa.ui.**
       continue-on-error: true
 
-    # Combine test results
+    # Debug UI Test Results
+    - name: Debug UI Results
+      if: always()
+      run: |
+        echo "UI Test Results Content:"
+        ls -R Functional_Testing/target/allure-results/
+        echo "Number of UI result files:"
+        find Functional_Testing/target/allure-results -type f | wc -l
+
+    # Combine test results with verification
     - name: Combine Allure Results
       if: always()
       run: |
         mkdir -p allure-results
         cp -r API_Testing/target/allure-results/* allure-results/ || true
         cp -r Functional_Testing/target/allure-results/* allure-results/ || true
+        echo "Combined Results Content:"
+        ls -R allure-results/
+        echo "Total number of result files:"
+        find allure-results -type f | wc -l
 
     # Generate Allure Report
     - name: Generate Allure Report
@@ -93,13 +115,3 @@ jobs:
         allure_results: allure-results
         allure_report: allure-report
         allure_history: allure-history
-
-    # Deploy to GitHub Pages
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: always()
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: allure-history
-        force_orphan: true
