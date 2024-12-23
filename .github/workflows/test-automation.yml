@@ -130,6 +130,11 @@ jobs:
     - name: Cleanup
       if: always()
       run: |
+        sudo chmod -R 777 API_Testing/target
+        sudo chmod -R 777 Functional_Testing/target
+        sudo chmod -R 777 allure-results
+        sudo chmod -R 777 allure-report
+        sudo chmod -R 777 allure-history
         rm -rf API_Testing/target
         rm -rf Functional_Testing/target
         rm -rf allure-results
