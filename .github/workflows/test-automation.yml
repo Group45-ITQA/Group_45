@@ -7,14 +7,19 @@ on:
     branches: [ main, dev ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
-    runs-on: ubuntu-latest  # Changed to Ubuntu
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # Fetch all history for proper Git operations
+        fetch-depth: 0
     
     - name: Set up JDK 21
       uses: actions/setup-java@v3
@@ -40,29 +45,33 @@ jobs:
         cd API_Testing
         mvn dependency:go-offline
         
-    # Start the API application
     - name: Start API Application
       run: |
         java -jar demo-0.0.1-SNAPSHOT.jar &
-        sleep 30  # Wait for application to start
+        sleep 30
       
-    # Run UI Tests
     - name: Run UI Tests
       run: |
         cd Functional_Testing
         mvn clean test
         
-    # Run API Tests
     - name: Run API Tests
       run: |
         cd API_Testing
         mvn clean test
         
-    # Stop the API application
     - name: Stop API Application
       if: always()
       run: |
         pkill java || true
+        
+    - name: Get Allure history
+      uses: actions/checkout@v3
+      if: always()
+      continue-on-error: true
+      with:
+        ref: gh-pages
+        path: gh-pages
         
     - name: Generate Allure Report
       uses: simple-elf/allure-report-action@master
@@ -72,12 +81,22 @@ jobs:
         allure_results: |
           Functional_Testing/target/allure-results
           API_Testing/target/allure-results
+        gh_pages: gh-pages
         allure_report: allure-report
+        allure_history: allure-history
         
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
-      if: always()
+    - name: Configure Pages
+      uses: actions/configure-pages@v4
+        
+    - name: Upload Pages Artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        name: allure-report
-        path: allure-report/
-        retention-days: 30
+        path: 'allure-history'
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+    - name: Report URL
+      run: |
+        echo "::notice title=Allure Report::Report is available at https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
