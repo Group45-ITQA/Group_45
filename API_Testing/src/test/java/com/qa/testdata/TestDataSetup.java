@@ -3,6 +3,9 @@ package com.qa.testdata;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 import com.qa.models.Book;
+import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
+
 import static com.qa.config.TestConfig.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,18 @@ public class TestDataSetup {
 
         Integer id2 = postBook(book2);
         if (id2 != null) createdBookIds.add(id2);
+    }
+
+    public static Integer createTestBook(RequestSpecification request, String bookName, String authorName) {
+        Book newBook = new Book(bookName, authorName);
+        Response response = request
+                .body(newBook)
+                .when()
+                .post(BOOKS_ENDPOINT);
+
+        Integer bookId = response.jsonPath().getInt("id");
+        Assert.assertNotNull(bookId, "Failed to create a book for testing");
+        return bookId;
     }
 
     private static Integer postBook(Book book) {
