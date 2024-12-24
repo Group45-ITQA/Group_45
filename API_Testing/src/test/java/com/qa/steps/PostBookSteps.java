@@ -16,6 +16,7 @@ public class PostBookSteps {
     private RequestSpecification request;
     private Response response;
     private Book bookDetails;
+    private static int bookCounter = 1;
 
     @Step("Setting up admin authentication for POST API")
     @Severity(SeverityLevel.CRITICAL)
@@ -28,7 +29,11 @@ public class PostBookSteps {
     @Severity(SeverityLevel.CRITICAL)
     @Given("I have valid book details")
     public void setupBookDetails() {
-        bookDetails = new Book("API Test Book1", "API Test Author1");
+        String title = "Test Book " + bookCounter;
+        String author = "Test Author " + bookCounter;
+        bookDetails = new Book(title, author);
+
+        bookCounter++;
     }
 
     @Step("Sending POST request to create a new book")
