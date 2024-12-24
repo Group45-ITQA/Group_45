@@ -17,8 +17,6 @@ Feature: Get Book By ID API
 
   @GetSingleBook
   @severity:medium
-  @bug:LIBRARY-101
-  @defect:InvalidIDHandling
   Scenario: Verify API handles non-integer ID format
     Given I am authenticated as an admin user to get a book with invalid ID
     When I send a request to get the book with a non-integer ID "abc"
