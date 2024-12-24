@@ -1,6 +1,7 @@
 package com.qa.steps;
 
 import io.cucumber.java.en.*;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.qameta.allure.*;
@@ -25,6 +26,19 @@ public class PostBookSteps {
         request = AuthenticationUtils.getAuthenticatedRequest();
     }
 
+    @Step("Setting up user authentication for POST API")
+    @Severity(SeverityLevel.CRITICAL)
+    @Given("I am authenticated as a regular user to add a new book")
+    public void setupUserAuthentication() {
+        request = AuthenticationUtils.getUserAuthenticatedRequest();
+    }
+
+    @Given("I am not authenticated")
+    public void setupNoAuthentication() {
+        request = AuthenticationUtils.getUnauthenticatedRequest();
+    }
+
+
     @Step("Providing valid book details")
     @Severity(SeverityLevel.CRITICAL)
     @Given("I have valid book details")
@@ -33,6 +47,14 @@ public class PostBookSteps {
         String author = "Test Author " + bookCounter;
         bookDetails = new Book(title, author);
 
+        bookCounter++;
+    }
+
+    @Step("Providing invalid book details")
+    @Severity(SeverityLevel.CRITICAL)
+    @Given("I have book details with numeric author")
+    public void setupNumericAuthorDetails() {
+        bookDetails = new Book("Test Book " + bookCounter, "12345");
         bookCounter++;
     }
 
@@ -68,5 +90,17 @@ public class PostBookSteps {
         Assert.assertNotNull(createdBook.getId(), "Created book ID should not be null");
         Assert.assertEquals(createdBook.getTitle(), bookDetails.getTitle(), "Book title should match");
         Assert.assertEquals(createdBook.getAuthor(), bookDetails.getAuthor(), "Book author should match");
+    }
+
+
+
+    @Step("Verifying response indicates invalid author input")
+    @Severity(SeverityLevel.CRITICAL)
+    @Then("the response should indicate invalid author input")
+    public void verifyInvalidAuthorInputMessage() {
+        String responseBody = response.getBody().asString();
+        Assert.assertTrue(responseBody.contains("Invalid") ||
+                        responseBody.contains("invalid"),
+                "Response should indicate invalid author input");
     }
 }
