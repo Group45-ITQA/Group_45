@@ -2,48 +2,69 @@ package com.qa.steps;
 
 import com.qa.pages.CartPage;
 import com.qa.pages.CheckoutPage;
-import com.qa.pages.LoginPage;
 import com.qa.pages.ProductPage;
 import io.cucumber.java.en.*;
 import org.testng.Assert;
+import io.qameta.allure.*;
+import com.qa.utils.DriverManager;
 
+@Epic("Checkout Features")
+@Feature("Checkout Form Validation")
+@Story("Form Field Value Retention")
 public class CheckoutSteps {
-    private ProductPage productPage;
-    private CartPage cartPage;
-    private CheckoutPage checkoutPage;
+    private final CartPage cartPage;
+    private final CheckoutPage checkoutPage;
+    private final ProductPage productPage;
 
-    @Given("I have an item in my cart")
-    public void i_have_an_item_in_my_cart() {
+    public CheckoutSteps() {
+        cartPage = new CartPage();
+        checkoutPage = new CheckoutPage();
         productPage = new ProductPage();
-        productPage.addProductToCart();
-        Assert.assertTrue(productPage.isProductAddedToCart(), "Product was not added to cart.");
+    }
+
+    @Given("I have {string} in my cart")
+    @Step("Adding item to cart: {0}")
+    public void i_have_item_in_my_cart(String itemName) {
+        cartPage.addItemToCart(itemName);
+        Assert.assertEquals(productPage.getCartCount(), "1",
+                "Product '" + itemName + "' was not added to cart successfully. Cart count is not 1");
     }
 
     @When("I proceed to the checkout page")
+    @Step("Navigating to checkout")
     public void i_proceed_to_the_checkout_page() {
-        cartPage = new CartPage();
-        cartPage.goToCartPage();
+        Assert.assertTrue(cartPage.isCheckoutButtonEnabled(),
+                "Checkout button is not enabled");
         cartPage.attemptToCheckout();
     }
 
     @When("I enter {string} in the first name field")
+    @Step("Entering first name: {0}")
     public void i_enter_in_the_first_name_field(String firstName) {
-        checkoutPage = new CheckoutPage();
         checkoutPage.enterFirstName(firstName);
     }
 
     @When("I enter {string} in the last name field")
+    @Step("Entering last name: {0}")
     public void i_enter_in_the_last_name_field(String lastName) {
         checkoutPage.enterLastName(lastName);
     }
 
     @Then("the first name field should contain {string}")
+    @Step("Verifying first name value: {0}")
     public void the_first_name_field_should_contain(String expectedFirstName) {
-        Assert.assertEquals(checkoutPage.getFirstNameValue(), expectedFirstName, "First name field did not contain the expected value.");
+        String actualFirstName = checkoutPage.getFirstNameValue();
+        Assert.assertEquals(actualFirstName, expectedFirstName,
+                "First name field contains incorrect value. Expected: " +
+                        expectedFirstName + ", but got: " + actualFirstName);
     }
 
-    @Then("the last name field should be empty")
-    public void the_last_name_field_should_be_empty() {
-        Assert.assertEquals(checkoutPage.getLastNameValue(), "", "Last name field was not empty.");
+    @Then("the last name field should contain {string}")
+    @Step("Verifying last name value: {0}")
+    public void the_last_name_field_should_contain(String expectedLastName) {
+        String actualLastName = checkoutPage.getLastNameValue();
+        Assert.assertEquals(actualLastName, expectedLastName,
+                "Last name field contains incorrect value. Expected: " +
+                        expectedLastName + ", but got: " + actualLastName);
     }
 }
