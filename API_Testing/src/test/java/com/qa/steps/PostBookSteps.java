@@ -16,7 +16,7 @@ public class PostBookSteps {
     private RequestSpecification request;
     private Response response;
     private Book bookDetails;
-    private static int bookCounter = 1;
+    private static int bookCounter = 4;
 
     @Step("Setting up admin authentication for POST API")
     @Severity(SeverityLevel.CRITICAL)

@@ -85,6 +85,29 @@ public class TestDataSetup {
         return null;
     }
 
+    public static void clearDatabase() {
+        Response getResponse = given()
+                .auth()
+                .basic(ADMIN_USERNAME, PASSWORD)
+                .when()
+                .get(BOOKS_ENDPOINT);
+
+        if (getResponse.getStatusCode() == 200) {
+            List<Integer> existingIds = getResponse.jsonPath().getList("id");
+            if (existingIds != null) {
+                for (Integer id : existingIds) {
+                    Response deleteResponse = given()
+                            .auth()
+                            .basic(USER_USERNAME, PASSWORD)
+                            .when()
+                            .delete(BOOKS_ENDPOINT + "/" + id);
+                }
+            }
+        }
+        createdBookIds.clear();
+    }
+
+
     public static Integer getFirstBookId() {
         return createdBookIds.isEmpty() ? null : createdBookIds.get(0);
     }
