@@ -1,35 +1,38 @@
 package com.qa.steps;
 
 import com.qa.pages.CartPage;
-import com.qa.pages.LoginPage;
 import io.cucumber.java.en.*;
 import org.testng.Assert;
 import com.qa.utils.DriverManager;
+import io.qameta.allure.*;
 
+@Epic("Shopping Cart Features")
+@Feature("Cart Checkout Management")
+@Story("Empty Cart Checkout Functionality")
 public class CartSteps {
-    private CartPage cartPage = new CartPage();
+    private CartPage cartPage;
+
+    public CartSteps() {
+        cartPage = new CartPage();
+    }
 
     @When("my shopping cart is empty")
+    @Step("Verifying cart is empty")
     public void my_shopping_cart_is_empty() {
-        cartPage.goToCartPage();
-        // Ensure the cart is empty (if not, remove all items)
-        if (cartPage.isItemInCart("Sauce Labs Backpack")) {
-            cartPage.removeItemFromCart("Sauce Labs Backpack");
-        }
-        if (cartPage.isItemInCart("Sauce Labs Bike Light")) {
-            cartPage.removeItemFromCart("Sauce Labs Bike Light");
-        }
+        Assert.assertTrue(cartPage.isCartEmpty(), "Cart should be empty");
     }
 
     @When("I click on the checkout button")
+    @Step("Attempting to checkout")
     public void i_click_on_the_checkout_button() {
         cartPage.attemptToCheckout();
     }
 
-    @Then("I should be able to proceed to the checkout information page")
-    public void i_should_be_able_to_proceed_to_the_checkout_information_page() {
-        // Verify the URL or the presence of specific elements on the checkout information page
+    @Then("I should not be able to proceed with checkout")
+    @Step("Verifying unable to proceed with checkout")
+    public void i_should_not_be_able_to_proceed_with_checkout() {
         String currentUrl = DriverManager.getDriver().getCurrentUrl();
-        Assert.assertTrue(currentUrl.contains("checkout-step-one.html"), "Failed to proceed to checkout information page");
+        Assert.assertTrue(currentUrl.contains("cart.html"),
+                "User should remain on cart page");
     }
 }

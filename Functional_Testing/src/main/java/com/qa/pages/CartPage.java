@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
 
+import java.util.List;
+
 public class CartPage {
     private WebDriver driver;
 
@@ -66,6 +68,15 @@ public class CartPage {
     public void attemptToCheckout() {
         checkoutButton.click();
         sleep(1);
+    }
+
+    public boolean isCartEmpty() {
+        try {
+            List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
+            return cartItems.isEmpty();
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     public boolean isCartEmptyErrorMessageDisplayed() {
