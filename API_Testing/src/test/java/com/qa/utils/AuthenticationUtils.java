@@ -23,4 +23,11 @@ public class AuthenticationUtils {
         return given()
                 .contentType("application/json");
     }
+
+    public static RequestSpecification getAuthenticatedRequestAsUser() {
+        return given()
+                .auth()
+                .basic(USER_USERNAME, PASSWORD)
+                .contentType("application/json");
+    }
 }

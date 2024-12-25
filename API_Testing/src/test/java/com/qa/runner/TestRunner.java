@@ -12,13 +12,14 @@ import com.qa.testdata.TestDataSetup;
 
 @CucumberOptions(
         // Feature files location - for all team members
-        features = "src/test/resources/features",
+        features = {"src/test/resources/features",
+                "src/test/resources/features/DeleteBooks.feature"},
 
         // Step definitions package - common for all
         glue = "com.qa.steps",
 
         // Tags for all API types
-        tags = "@GetAllBooks or @GetSingleBook or @PostBook or @PostWithoutTitle or @UpdateBook or @PostWithoutAuthor or @PostDuplicateBook",
+        tags = "@GetAllBooks or @GetSingleBook or @PostBook or @PostWithoutTitle or @UpdateBook or @PostWithoutAuthor or @PostDuplicateBook or @DeleteBook",
 
         // Reporting configuration used by all tests
         plugin = {
