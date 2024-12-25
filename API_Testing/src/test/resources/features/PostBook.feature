@@ -42,3 +42,13 @@ Feature: Create Book API
     And I have valid book details
     When I send a request to create a book
     Then the create book response status code should be 401
+
+  @PostDuplicateBook
+  @severity:critical
+  Scenario: Attempt to add a duplicate book
+    Given I am authenticated as an admin user to add a new book
+    And I have valid book details
+    And I have added the book to the system
+    When I send a request to add the same book again
+    Then the duplicate book response status code should be 208
+    And the response should indicate the book is already added
