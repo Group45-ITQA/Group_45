@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
-
+import java.util.List;
 public class NavigationPage {
     private WebDriver driver;
     private CartPage cartPage;

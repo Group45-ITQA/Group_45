@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Functional_Testing" />
         <module name="Group45_UITesting" />
+        <module name="Group45_FunctionalTesting" />
       </profile>
     </annotationProcessing>
   </component>
