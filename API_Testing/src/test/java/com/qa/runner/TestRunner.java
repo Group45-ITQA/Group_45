@@ -18,7 +18,7 @@ import com.qa.testdata.TestDataSetup;
         glue = "com.qa.steps",
 
         // Tags for all API types
-        tags = "@GetAllBooks or @GetSingleBook or @PostBook or @UpdateBook",
+        tags = "@GetAllBooks or @GetSingleBook or @PostBook or @PostWithoutTitle or @UpdateBook",
 
         // Reporting configuration used by all tests
         plugin = {
