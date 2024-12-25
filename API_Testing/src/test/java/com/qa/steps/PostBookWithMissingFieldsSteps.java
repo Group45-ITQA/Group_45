@@ -11,15 +11,15 @@ import com.qa.utils.*;
 
 @Epic("LibraryAPI")
 @Feature("BookManagement")
-public class PostBookWithoutTitleSteps {
+public class PostBookWithMissingFieldsSteps {
 
     private RequestSpecification request;
     private Response response;
     private Book bookDetails;
 
-    @Step("Setting up admin authentication for POST API without title")
+    @Step("Setting up admin authentication for POST API")
     @Severity(SeverityLevel.CRITICAL)
-    @Given("I am authenticated as an admin user to add a book without a title")
+    @Given("I am authenticated as an admin user")
     public void setupAdminAuthentication() {
         request = AuthenticationUtils.getAuthenticatedRequest();
     }
@@ -29,14 +29,24 @@ public class PostBookWithoutTitleSteps {
     @Given("I have book details without a title")
     public void setupBookDetailsWithoutTitle() {
         bookDetails = new Book();
-        bookDetails.setAuthor("Author Without Title"+ System.currentTimeMillis());
+        bookDetails.setAuthor("Author " + System.currentTimeMillis());
         bookDetails.setTitle("");
     }
 
-    @Step("Sending POST request to create a book without a title")
+    @Step("Providing book details without an author")
     @Severity(SeverityLevel.CRITICAL)
-    @When("I send a request to create a book without a title")
-    public void createBookWithoutTitle() {
+    @Given("I have book details without an author")
+    public void setupBookDetailsWithoutAuthor() {
+        bookDetails = new Book();
+        bookDetails.setTitle("Title " + System.currentTimeMillis());
+        bookDetails.setAuthor("");
+    }
+
+    @Step("I send a request to create a book without title")
+    @Severity(SeverityLevel.CRITICAL)
+    @When("I send a request to create a book without title")
+    @When("I send a request to create a book without author")
+    public void createBook() {
         response = request
                 .contentType("application/json")
                 .body(bookDetails)
@@ -48,18 +58,19 @@ public class PostBookWithoutTitleSteps {
         }
     }
 
+    @Step("Verifying the response status code")
     @Severity(SeverityLevel.CRITICAL)
-    @Then("the response status code for missing title should be {int}")
+    @Then("the response status code should be {int}")
     public void verifyResponseStatusCode(int expectedStatusCode) {
-        ResponseValidator.verifyStatusCode(response, 400);
+        ResponseValidator.verifyStatusCode(response, expectedStatusCode);
     }
 
-    @Step("Verifying response contains title-required error message")
+    @Step("Verifying response contains required field error message")
     @Severity(SeverityLevel.CRITICAL)
-    @And("the response should indicate a title is required")
-    public void verifyTitleRequiredErrorMessage() {
+    @And("the response should indicate a {string} is required")
+    public void verifyRequiredFieldErrorMessage(String field) {
         String errorMessage = response.jsonPath().getString("error");
         Assert.assertNotNull(errorMessage, "Error message should not be null");
-        Assert.assertTrue(errorMessage.contains("title is required"), "Expected error message about missing title.");
+        Assert.assertTrue(errorMessage.contains(field + " is required"), "Expected error message about missing " + field + ".");
     }
 }

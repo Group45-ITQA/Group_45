@@ -17,6 +17,7 @@ public class PostBookSteps {
     private RequestSpecification request;
     private Response response;
     private Book bookDetails;
+    int bookCounter = 4;
 
     int bookCounter = 4;
 
