@@ -129,8 +129,7 @@ public class PostBookSteps {
     @And("the response should indicate the book is already added")
     public void verifyDuplicateBookResponseMessage() {
         String responseBody = response.getBody().asString();
-        Assert.assertTrue(responseBody.contains("Book Already Exists") ||
-                        responseBody.contains("duplicate"),
+        Assert.assertTrue(responseBody.contains("Book Already Exists"),
                 "Response should indicate the book is already added.");
     }
 
