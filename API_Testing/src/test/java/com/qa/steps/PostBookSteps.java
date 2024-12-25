@@ -18,6 +18,8 @@ public class PostBookSteps {
     private Response response;
     private Book bookDetails;
 
+    int bookCounter = 4;
+
     @Step("Setting up admin authentication for POST API")
     @Severity(SeverityLevel.CRITICAL)
     @Given("I am authenticated as an admin user to add a new book")
