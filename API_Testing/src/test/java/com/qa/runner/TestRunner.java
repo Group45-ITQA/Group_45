@@ -2,6 +2,8 @@ package com.qa.runner;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import io.restassured.RestAssured;
 import static com.qa.config.TestConfig.*;
@@ -16,7 +18,7 @@ import com.qa.testdata.TestDataSetup;
         glue = "com.qa.steps",
 
         // Tags for all API types
-        tags = "@GetAllBooks or @GetSingleBook or @PostBook or @PostWithoutTitle",
+        tags = "@GetAllBooks or @GetSingleBook or @PostBook or @PostWithoutTitle or @UpdateBook",
 
         // Reporting configuration used by all tests
         plugin = {
@@ -34,6 +36,7 @@ public class TestRunner extends AbstractTestNGCucumberTests {
     public void setupAPITests() {
         RestAssured.baseURI = BASE_URL;
         RestAssured.filters(new AllureRestAssured());
+        TestDataSetup.clearDatabase();
         TestDataSetup.setupTestData();
     }
 }

@@ -15,6 +15,8 @@ public class BaseSteps {
     @Given("I am logged in and on the products page for filtering")
     @Given("I am logged in and on the products page for cart management")
     @Given("I am logged in and on the products page for product navigation")
+    @Given("I am logged in and on the products page for image verification")
+
     public void i_am_logged_in_and_on_products_page() {
         loginPage.login();
         if (!productPage.verifyProductPageIsDisplayed()) {

@@ -9,7 +9,10 @@ import com.qa.utils.DriverManager;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProductPage {
     private WebDriver driver;
@@ -47,6 +50,11 @@ public class ProductPage {
 
     @FindBy(css = ".inventory_details_name")
     private WebElement productDetailName;
+
+    @FindBy(css = ".inventory_item_img img")
+    private List<WebElement> productImages;
+
+
 
     private List<WebElement> workingProducts;
 
@@ -173,6 +181,17 @@ public class ProductPage {
         throw new RuntimeException("Product link not found: " + productName);
     }
 
+    public boolean hasDuplicateImages() {
+        Set<String> imageSources = new HashSet<>();
+        for (WebElement image : productImages) {
+            String src = image.getAttribute("src");
+            // If adding to set fails, it means duplicate found - return true
+            if (!imageSources.add(src)) {
+                return true;  // Images are NOT unique (found duplicate)
+            }
+        }
+        return false; // No duplicates found
+    }
     public boolean isCorrectProductDisplayed(String expectedProduct) {
         try {
             String actualProduct = productDetailName.getText();
