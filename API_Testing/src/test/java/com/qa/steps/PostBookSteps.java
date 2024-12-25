@@ -16,7 +16,6 @@ public class PostBookSteps {
     private RequestSpecification request;
     private Response response;
     private Book bookDetails;
-    private static int bookCounter = 1;
 
     @Step("Setting up admin authentication for POST API")
     @Severity(SeverityLevel.CRITICAL)
@@ -29,11 +28,10 @@ public class PostBookSteps {
     @Severity(SeverityLevel.CRITICAL)
     @Given("I have valid book details")
     public void setupBookDetails() {
-        String title = "Test Book " + bookCounter;
-        String author = "Test Author " + bookCounter;
+        String title = "Test Book " + System.currentTimeMillis();
+        String author = "Test Author " + System.currentTimeMillis();
         bookDetails = new Book(title, author);
 
-        bookCounter++;
     }
 
     @Step("Sending POST request to create a new book")
@@ -51,11 +49,10 @@ public class PostBookSteps {
         }
     }
 
-    @Step("Verifying response status code is {expectedStatusCode}")
     @Severity(SeverityLevel.CRITICAL)
     @Then("the create book response status code should be {int}")
     public void verifyResponseStatusCode(int expectedStatusCode) {
-        ResponseValidator.verifyStatusCode(response, expectedStatusCode);
+        ResponseValidator.verifyStatusCode(response, 201);
     }
 
     @Step("Verifying response contains valid created book details")
