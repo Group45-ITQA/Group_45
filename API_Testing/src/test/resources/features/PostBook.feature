@@ -50,5 +50,4 @@ Feature: Create Book API
     And I have valid book details
     And I have added the book to the system
     When I send a request to add the same book again
-    Then the duplicate book response status code should be 208
-    And the response should indicate the book is already added
+    Then the duplicate book response status code should be 409

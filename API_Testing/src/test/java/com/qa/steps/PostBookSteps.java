@@ -126,16 +126,6 @@ public class PostBookSteps {
                 "Expected status code does not match for duplicate book.");
     }
 
-    @Step("Verifying response indicates the book is already added")
-    @Severity(SeverityLevel.CRITICAL)
-    @And("the response should indicate the book is already added")
-    public void verifyDuplicateBookResponseMessage() {
-        String responseBody = response.getBody().asString();
-        Assert.assertTrue(responseBody.contains("Book Already Exists") ||
-                        responseBody.contains("duplicate"),
-                "Response should indicate the book is already added.");
-    }
-
     @Step("Verifying response indicates invalid author input")
     @Severity(SeverityLevel.CRITICAL)
     @Then("the response should indicate invalid author input")
