@@ -6,23 +6,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
+import com.qa.utils.PageUtils;
+import com.qa.utils.WaitUtils;
 
 import java.util.List;
 
 public class CartPage {
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
+    private final HeaderComponent headerComponent;
 
     @FindBy(id = "checkout")
     private WebElement checkoutButton;
 
-//    @FindBy(className = "shopping_cart_badge")
-//    private WebElement cartBadge;
-
     @FindBy(className = "error-message-container")
     private WebElement errorMessage;
-
-    @FindBy(className = "shopping_cart_link")
-    private WebElement cartLink;
 
     @FindBy(id = "item_4_title_link")
     private WebElement backpackItem;
@@ -32,66 +30,57 @@ public class CartPage {
 
     public CartPage() {
         this.driver = DriverManager.getDriver();
+        this.pageUtils = new PageUtils(driver);
+        this.headerComponent = new HeaderComponent(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void goToCartPage() {
-        cartLink.click();
-        sleep(1);
+        headerComponent.clickCart();
     }
 
     public void addItemToCart(String itemName) {
-        WebElement addItemButton = driver.findElement(By.id("add-to-cart-" + itemName.replace(" ", "-").toLowerCase()));
-        addItemButton.click();
-        sleep(1);
+        String buttonId = "add-to-cart-" + itemName.replace(" ", "-").toLowerCase();
+        WebElement addItemButton = driver.findElement(By.id(buttonId));
+        pageUtils.click(addItemButton);
     }
 
     public void removeItemFromCart(String itemName) {
-        WebElement removeItemButton = driver.findElement(By.id("remove-" + itemName.replace(" ", "-").toLowerCase()));
-        removeItemButton.click();
-        sleep(1);
+        String buttonId = "remove-" + itemName.replace(" ", "-").toLowerCase();
+        WebElement removeItemButton = driver.findElement(By.id(buttonId));
+        pageUtils.click(removeItemButton);
     }
 
     public boolean isItemInCart(String itemName) {
         try {
-            WebElement item = driver.findElement(By.id("item_" + itemName.replace(" ", "-").toLowerCase() + "_title_link"));
-            return item.isDisplayed();
+            String itemId = "item_" + itemName.replace(" ", "-").toLowerCase() + "_title_link";
+            WebElement item = driver.findElement(By.id(itemId));
+            return WaitUtils.waitForElementVisible(driver, item, 5);
         } catch (Exception e) {
             return false;
         }
     }
 
     public boolean isCheckoutButtonEnabled() {
-        return checkoutButton.isEnabled();
+        return WaitUtils.waitForElementVisible(driver, checkoutButton) &&
+                checkoutButton.isEnabled();
     }
 
     public void attemptToCheckout() {
-        checkoutButton.click();
-        sleep(1);
+        pageUtils.click(checkoutButton);
     }
 
     public boolean isCartEmpty() {
         try {
             List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
+            WaitUtils.staticWait(1);
             return cartItems.isEmpty();
-        } catch (Exception e) {
-            return true;
-        }
-    }
-
-    public boolean isCartEmptyErrorMessageDisplayed() {
-        try {
-            return errorMessage.isDisplayed();
         } catch (Exception e) {
             return false;
         }
     }
 
-    private void sleep(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public boolean isCartEmptyErrorMessageDisplayed() {
+        return WaitUtils.waitForElementVisible(driver, errorMessage, 5);
     }
 }
