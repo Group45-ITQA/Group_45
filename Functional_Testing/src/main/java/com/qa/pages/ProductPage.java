@@ -6,33 +6,27 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
-import org.openqa.selenium.support.ui.Select;
+import com.qa.utils.PageUtils;
+import com.qa.utils.WaitUtils;
 
 import java.util.ArrayList;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class ProductPage {
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
+    private final HeaderComponent headerComponent;
 
+    // Product List Elements
     @FindBy(className = "inventory_item")
     private List<WebElement> inventoryItems;
 
-    public boolean verifyProductPageIsDisplayed() {
-        try {
-            return !inventoryItems.isEmpty() &&
-                    inventoryItems.get(0).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-    //////////////////////////////// Elements for adding product to cart/////////////////////////////////
+    // Cart Elements
     @FindBy(id = "add-to-cart-sauce-labs-backpack")
     private WebElement addToCartButton;
 
-    // Element that appears after adding to cart - indicates product is in cart
     @FindBy(id = "remove-sauce-labs-backpack")
     private WebElement removeButton;
 
@@ -45,6 +39,7 @@ public class ProductPage {
     @FindBy(css = "[id^='remove']")
     private List<WebElement> removeButtons;
 
+    // Product Details Elements
     @FindBy(css = ".inventory_item_name")
     private List<WebElement> productLinks;
 
@@ -54,16 +49,19 @@ public class ProductPage {
     @FindBy(css = ".inventory_item_img img")
     private List<WebElement> productImages;
 
+    // Filter Elements
+    @FindBy(className = "product_sort_container")
+    private WebElement filterDropdown;
 
+    @FindBy(className = "inventory_item_price")
+    private List<WebElement> productPrices;
 
     private List<WebElement> workingProducts;
 
-    // Shopping cart badge that shows number of items
-    @FindBy(className = "shopping_cart_badge")
-    private WebElement cartBadge;
-
     public ProductPage() {
         this.driver = DriverManager.getDriver();
+        this.pageUtils = new PageUtils(driver);
+        this.headerComponent = new HeaderComponent(driver);
         PageFactory.initElements(driver, this);
         initializeWorkingProducts();
     }
@@ -74,10 +72,19 @@ public class ProductPage {
         workingProducts.add(bikeLight);
     }
 
-    // Adds the product to cart
+    // Product Page Verification
+    public boolean verifyProductPageIsDisplayed() {
+        try {
+            return !inventoryItems.isEmpty() &&
+                    pageUtils.isDisplayed(inventoryItems.get(0));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // Cart Operations
     public void addProductToCart() {
-        addToCartButton.click();
-        sleep(1); // Wait for cart update
+        pageUtils.click(addToCartButton);
     }
 
     public void addMultipleProductsToCart(int numberOfProducts) {
@@ -85,83 +92,46 @@ public class ProductPage {
 
         for (int i = 0; i < productsToAdd; i++) {
             WebElement product = workingProducts.get(i);
-            if (product != null && product.isEnabled()) {
-                product.click();
-                waitForCartUpdate();
+            if (product != null) {
+                pageUtils.click(product);
             }
         }
     }
 
-    // Verifies if the product was successfully added to cart
     public boolean isProductAddedToCart() {
         try {
-            return removeButton.isDisplayed(); // If "Remove" button is visible, product was added
+            return pageUtils.isDisplayed(removeButton);
         } catch (Exception e) {
-            return false; // If "Remove" button isn't found, product wasn't added
+            return false;
         }
     }
 
-
     public boolean areProductsAddedToCart(int expectedCount) {
+        WaitUtils.staticWait(1); // Maintaining original wait behavior
         return removeButtons.size() == expectedCount;
     }
 
-    // Gets the cart count (though this might not be the best verification)
     public String getCartCount() {
-        try {
-            return cartBadge.getText();
-        } catch (Exception e) {
-            return "0"; // Return "0" if no badge is found
-        }
+        return headerComponent.getCartCount();
     }
 
-    private void waitForCartUpdate() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Utility method for adding small delays
-    private void sleep(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-/////////////////////Filter Option Elements////////////////////
-
-    @FindBy(className = "product_sort_container")
-    private WebElement filterDropdown;
-
-    @FindBy(className = "inventory_item_price")
-    private List<WebElement> productPrices;
-
+    // Filter Operations
     public void selectFilter(String filterOption) {
         try {
-            Select dropdown = new Select(filterDropdown);
-            dropdown.selectByVisibleText(filterOption);  // Changed to selectByVisibleText
-            // Common values are: "Price (low to high)", "Price (high to low)",
-            // "Name (A to Z)", "Name (Z to A)"
-            sleep(1); // Wait for filter to apply
+            pageUtils.selectFromDropdown(filterDropdown, filterOption);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to select filter option: " + filterOption);
+            throw new RuntimeException("Failed to select filter option: " + filterOption, e);
         }
     }
 
     public boolean verifyPriceLowToHighFilter() {
+        WaitUtils.staticWait(1); // Maintaining original wait behavior
         List<Double> prices = new ArrayList<>();
         for (WebElement priceElement : productPrices) {
-            // Remove '$' and convert to double
             String priceText = priceElement.getText().replace("$", "");
             prices.add(Double.parseDouble(priceText));
         }
 
-        // Check if prices are sorted in ascending order
         for (int i = 0; i < prices.size() - 1; i++) {
             if (prices.get(i) > prices.get(i + 1)) {
                 return false;
@@ -170,30 +140,33 @@ public class ProductPage {
         return true;
     }
 
+    // Product Navigation
     public void clickProductLink(String productName) {
         for (WebElement link : productLinks) {
             if (link.getText().equals(productName)) {
-                link.click();
-                sleep(1);
+                pageUtils.click(link);
                 return;
             }
         }
         throw new RuntimeException("Product link not found: " + productName);
     }
 
+    // Image Verification
     public boolean hasDuplicateImages() {
         Set<String> imageSources = new HashSet<>();
         for (WebElement image : productImages) {
+            pageUtils.isDisplayed(image); // Wait for image to be visible
             String src = image.getAttribute("src");
-            // If adding to set fails, it means duplicate found - return true
             if (!imageSources.add(src)) {
-                return true;  // Images are NOT unique (found duplicate)
+                return true;
             }
         }
-        return false; // No duplicates found
+        return false;
     }
+
     public boolean isCorrectProductDisplayed(String expectedProduct) {
         try {
+            pageUtils.isDisplayed(productDetailName);
             String actualProduct = productDetailName.getText();
             return actualProduct.equals(expectedProduct);
         } catch (Exception e) {

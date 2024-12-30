@@ -5,9 +5,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
+import com.qa.utils.PageUtils;
 
 public class CheckoutPage {
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     @FindBy(id = "first-name")
     private WebElement firstNameField;
@@ -23,32 +25,25 @@ public class CheckoutPage {
 
     public CheckoutPage() {
         this.driver = DriverManager.getDriver();
+        this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void enterFirstName(String firstName) {
-        firstNameField.clear();
-        firstNameField.sendKeys(firstName);
+        pageUtils.type(firstNameField, firstName);
     }
 
     public void enterLastName(String lastName) {
-        lastNameField.clear();
-        lastNameField.sendKeys(lastName);
+        pageUtils.type(lastNameField, lastName);
     }
 
     public String getFirstNameValue() {
+        pageUtils.isDisplayed(firstNameField);
         return firstNameField.getAttribute("value");
     }
 
     public String getLastNameValue() {
+        pageUtils.isDisplayed(lastNameField);
         return lastNameField.getAttribute("value");
-    }
-
-    private void sleep(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
