@@ -17,23 +17,6 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
-      with:
-        lfs: true
-    
-    # Manage Git LFS Objects
-    - name: Manage Git LFS
-      run: |
-        git lfs prune
-        git lfs clean
-    
-    # Cache Git LFS Objects
-    - name: Cache Git LFS objects
-      uses: actions/cache@v3
-      with:
-        path: .git/lfs
-        key: ${{ runner.os }}-lfs-${{ hashFiles('**/*.jar') }}
-        restore-keys: |
-          ${{ runner.os }}-lfs-
     
     - name: Set up JDK 21
       uses: actions/setup-java@v3
@@ -42,7 +25,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    # Install Chrome
     - name: Install Chrome
       run: |
         sudo mkdir -p /etc/apt/sources.list.d
@@ -52,11 +34,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install google-chrome-stable -y
     
-    # Setup ChromeDriver
     - name: Setup ChromeDriver
       uses: nanasess/setup-chromedriver@master
       
-    # Start Chrome Driver
     - name: Start ChromeDriver
       run: |
         export DISPLAY=:99
@@ -64,7 +44,6 @@ jobs:
         google-chrome --version
         sudo Xvfb -ac :99 -screen 0 1920x1080x24 > /dev/null 2>&1 &
     
-    # Debug Chrome Setup
     - name: Debug Chrome Setup
       run: |
         which google-chrome
@@ -72,7 +51,6 @@ jobs:
         which chromedriver
         chromedriver --version
     
-    # Start API Application
     - name: Start API Application
       run: |
         cp demo-0.0.1-SNAPSHOT.jar API_Testing/
@@ -81,13 +59,11 @@ jobs:
         java -jar demo-0.0.1-SNAPSHOT.jar &
         sleep 30
     
-    # Run API Tests
     - name: Run API Tests
       working-directory: ./API_Testing
       run: mvn clean test -Dtest=com.qa.**
       continue-on-error: true
 
-    # Debug API Test Results
     - name: Debug API Results
       if: always()
       run: |
@@ -96,13 +72,11 @@ jobs:
         echo "Number of API result files:"
         find API_Testing/target/allure-results -type f | wc -l
     
-    # Run UI Tests
     - name: Run UI Tests
       working-directory: ./Functional_Testing
       run: mvn clean test -Dtest=com.qa.**
       continue-on-error: true
 
-    # Debug UI Test Results
     - name: Debug UI Results
       if: always()
       run: |
@@ -111,7 +85,6 @@ jobs:
         echo "Number of UI result files:"
         find Functional_Testing/target/allure-results -type f | wc -l
 
-    # Combine test results with verification
     - name: Combine Allure Results
       if: always()
       run: |
@@ -123,7 +96,6 @@ jobs:
         echo "Total number of result files:"
         find allure-results -type f | wc -l
 
-    # Generate Allure Report
     - name: Generate Allure Report
       uses: simple-elf/allure-report-action@master
       if: always()
@@ -132,7 +104,6 @@ jobs:
         allure_report: allure-report
         allure_history: allure-history
         
-    # Deploy Allure Report
     - name: Deploy Allure Report
       if: always()
       uses: peaceiris/actions-gh-pages@v3
@@ -141,13 +112,6 @@ jobs:
         publish_dir: ./allure-report
         publish_branch: gh-pages
         force_orphan: true
-    
-    # Additional LFS Cleanup
-    - name: LFS Object Cleanup
-      if: always()
-      run: |
-        git lfs prune
-        git lfs clean
         
     - name: Cleanup
       if: always()
