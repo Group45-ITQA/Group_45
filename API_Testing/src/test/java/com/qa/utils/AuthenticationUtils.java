@@ -11,4 +11,16 @@ public class AuthenticationUtils {
                 .basic(ADMIN_USERNAME, PASSWORD)
                 .contentType("application/json");
     }
+
+    public static RequestSpecification getUserAuthenticatedRequest() {
+        return given()
+                .auth()
+                .basic(USER_USERNAME, PASSWORD)
+                .contentType("application/json");
+    }
+
+    public static RequestSpecification getUnauthenticatedRequest() {
+        return given()
+                .contentType("application/json");
+    }
 }

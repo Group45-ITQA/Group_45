@@ -3,6 +3,9 @@ package com.qa.testdata;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 import com.qa.models.Book;
+import io.restassured.specification.RequestSpecification;
+import org.testng.Assert;
+
 import static com.qa.config.TestConfig.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,18 @@ public class TestDataSetup {
         if (id2 != null) createdBookIds.add(id2);
     }
 
+    public static Integer createTestBook(RequestSpecification request, String bookName, String authorName) {
+        Book newBook = new Book(bookName, authorName);
+        Response response = request
+                .body(newBook)
+                .when()
+                .post(BOOKS_ENDPOINT);
+
+        Integer bookId = response.jsonPath().getInt("id");
+        Assert.assertNotNull(bookId, "Failed to create a book for testing");
+        return bookId;
+    }
+
     private static Integer postBook(Book book) {
         Response response = given()
                 .auth()
@@ -69,6 +84,29 @@ public class TestDataSetup {
         }
         return null;
     }
+
+    public static void clearDatabase() {
+        Response getResponse = given()
+                .auth()
+                .basic(ADMIN_USERNAME, PASSWORD)
+                .when()
+                .get(BOOKS_ENDPOINT);
+
+        if (getResponse.getStatusCode() == 200) {
+            List<Integer> existingIds = getResponse.jsonPath().getList("id");
+            if (existingIds != null) {
+                for (Integer id : existingIds) {
+                    Response deleteResponse = given()
+                            .auth()
+                            .basic(USER_USERNAME, PASSWORD)
+                            .when()
+                            .delete(BOOKS_ENDPOINT + "/" + id);
+                }
+            }
+        }
+        createdBookIds.clear();
+    }
+
 
     public static Integer getFirstBookId() {
         return createdBookIds.isEmpty() ? null : createdBookIds.get(0);
