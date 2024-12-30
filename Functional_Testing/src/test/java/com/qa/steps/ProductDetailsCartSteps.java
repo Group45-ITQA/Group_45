@@ -21,18 +21,6 @@ public class ProductDetailsCartSteps {
         productDetailsPage = new ProductDetailsPage();
     }
 
-    @Given("I am logged in and on the products page")
-    public void i_am_logged_in_and_on_products_page() {
-        loginPage.login();
-        Assert.assertTrue(productPage.verifyProductPageIsDisplayed(),
-                "Products page is not displayed after login");
-    }
-
-    @When("I click on a product name {string}")
-    public void i_click_on_product_name(String productName) {
-        productPage.clickProductLink(productName);
-    }
-
     @And("I am redirected to the product details page")
     public void i_am_redirected_to_product_details() {
         Assert.assertTrue(productDetailsPage.isProductDetailsPageDisplayed(),

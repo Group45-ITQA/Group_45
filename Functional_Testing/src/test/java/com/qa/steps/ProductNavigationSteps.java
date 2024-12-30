@@ -15,6 +15,7 @@ public class ProductNavigationSteps {
     }
 
     @When("I click on the {string} product link")
+    @When("I click on a product name {string}")
     @Step("Clicking on product link: {productName}")
     public void clickProductLink(String productName) {
         productPage.clickProductLink(productName);
