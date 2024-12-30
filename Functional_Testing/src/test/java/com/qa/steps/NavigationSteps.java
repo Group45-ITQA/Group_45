@@ -2,7 +2,7 @@
 
     import com.qa.pages.CartPage;
     import com.qa.pages.LoginPage;
-    import com.qa.pages.NavigationPage;
+    import com.qa.pages.NavBarPage;
     import io.cucumber.java.en.*;
     import io.cucumber.java.After;
     import io.cucumber.java.Before;
@@ -10,13 +10,13 @@
     import com.qa.utils.DriverManager;
 
     public class NavigationSteps {
-        private NavigationPage navigationPage;
+        private NavBarPage navBarPage;
         private LoginPage loginPage;
         private CartPage cartPage;
 
         @Before
         public void setup() {
-            navigationPage = new NavigationPage();
+            navBarPage = new NavBarPage();
             loginPage = new LoginPage();
             cartPage = new CartPage();
         }
@@ -33,51 +33,51 @@
 
         @When("I click the menu button")
         public void i_click_menu_button() {
-            navigationPage.clickMenu();
+            navBarPage.clickMenu();
         }
 
         @When("I click the All Items link")
         public void i_click_all_items() {
-            navigationPage.clickAllItems();
+            navBarPage.clickAllItems();
         }
 
         @When("I click the About link")
         public void i_click_about() {
-            navigationPage.clickAbout();
+            navBarPage.clickAbout();
         }
 
         @When("I click the Logout link")
         public void i_click_logout() {
-            navigationPage.clickLogout();
+            navBarPage.clickLogout();
         }
 
         @When("I click the Reset App State link")
         public void i_click_reset() {
-            navigationPage.clickReset();
+            navBarPage.clickReset();
         }
 
         @When("I click the cart button")
         public void i_click_cart() {
-            navigationPage.clickCart();
+            navBarPage.clickCart();
         }
 
 
 
         @Then("I should be on the inventory page")
         public void verify_on_inventory_page() {
-            Assert.assertTrue(navigationPage.isOnInventoryPage(),
+            Assert.assertTrue(navBarPage.isOnInventoryPage(),
                     "Not on inventory page");
         }
 
         @Then("I should be on the cart page")
         public void verify_on_cart_page() {
-            Assert.assertTrue(navigationPage.isOnCartPage(),
+            Assert.assertTrue(navBarPage.isOnCartPage(),
                     "Not on cart page");
         }
 
         @Then("I should be on the login page")
         public void verify_on_login_page() {
-            Assert.assertTrue(navigationPage.isOnLoginPage(),
+            Assert.assertTrue(navBarPage.isOnLoginPage(),
                     "Not on login page");
         }
 

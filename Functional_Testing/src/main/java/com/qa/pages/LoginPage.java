@@ -1,14 +1,16 @@
 package com.qa.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
+import com.qa.utils.PageUtils;
+import com.qa.utils.ConfigurationManager;
 
 public class LoginPage {
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
     @FindBy(id = "user-name")
     private WebElement usernameField;
@@ -21,22 +23,22 @@ public class LoginPage {
 
     public LoginPage() {
         this.driver = DriverManager.getDriver();
+        this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void login() {
-        driver.get("https://www.saucedemo.com/");
-        usernameField.sendKeys("problem_user"); //login as problem_user
-        passwordField.sendKeys("secret_sauce");
-        loginButton.click();
-        sleep(1);
+        login(
+                ConfigurationManager.getProperty("username.problem"),
+                ConfigurationManager.getProperty("password.default")
+        );
     }
 
-    private void sleep(int seconds) {
-        try {
-            Thread.sleep(seconds * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void login(String username, String password) {
+        driver.get(ConfigurationManager.getProperty("base.url"));
+
+        pageUtils.type(usernameField, username);
+        pageUtils.type(passwordField, password);
+        pageUtils.click(loginButton);
     }
 }

@@ -5,11 +5,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.qa.utils.DriverManager;
+import com.qa.utils.PageUtils;
+import com.qa.utils.WaitUtils;
+
 import java.util.Set;
 
 public class SocialMediaPage {
-    private WebDriver driver;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
+    // Social Media Links
     @FindBy(css = "li.social_twitter a")
     private WebElement twitterLink;
 
@@ -21,48 +26,54 @@ public class SocialMediaPage {
 
     public SocialMediaPage() {
         this.driver = DriverManager.getDriver();
+        this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
     }
 
     public void clickSocialMediaLink(String platform) {
+        WebElement socialLink = getSocialLink(platform);
+        pageUtils.click(socialLink);
+        pageUtils.switchToNewWindow();
+    }
+
+    private WebElement getSocialLink(String platform) {
         switch (platform.toLowerCase()) {
             case "twitter":
-                twitterLink.click();
-                break;
+                return twitterLink;
             case "facebook":
-                facebookLink.click();
-                break;
+                return facebookLink;
             case "linkedin":
-                linkedinLink.click();
-                break;
+                return linkedinLink;
             default:
                 throw new IllegalArgumentException("Unsupported social media platform: " + platform);
         }
-        handleWindowSwitch();
     }
 
     public boolean isRedirectedToSocialMedia(String expectedUrl) {
-        // Wait for a short time to allow the redirect to complete
         try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            for (int i = 0; i < 10; i++) {
+                String currentUrl = driver.getCurrentUrl();
+                if (currentUrl.toLowerCase().contains(expectedUrl.toLowerCase())) {
+                    return true;
+                }
+                WaitUtils.staticWait(1);
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
         }
-
-        String currentUrl = driver.getCurrentUrl();
-        return currentUrl.toLowerCase().contains(expectedUrl.toLowerCase());
     }
 
-    private void handleWindowSwitch() {
-        String originalWindow = driver.getWindowHandle();
-        Set<String> windowHandles = driver.getWindowHandles();
+    public void closeAdditionalWindows() {
+        String mainWindow = driver.getWindowHandle();
+        Set<String> allWindows = driver.getWindowHandles();
 
-        // Switch to new window/tab
-        for (String windowHandle : windowHandles) {
-            if (!windowHandle.equals(originalWindow)) {
-                driver.switchTo().window(windowHandle);
-                break;
+        for (String window : allWindows) {
+            if (!window.equals(mainWindow)) {
+                driver.switchTo().window(window);
+                driver.close();
             }
         }
+        driver.switchTo().window(mainWindow);
     }
 }
