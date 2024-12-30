@@ -24,6 +24,13 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+
+    - name: Create Test Directories
+      run: |
+        mkdir -p API_Testing/target/allure-results
+        mkdir -p Functional_Testing/target/allure-results
+        chmod -R 777 API_Testing/target
+        chmod -R 777 Functional_Testing/target
     
     - name: Install Chrome
       run: |
@@ -116,13 +123,13 @@ jobs:
     - name: Cleanup
       if: always()
       run: |
-        sudo chmod -R 777 API_Testing/target
-        sudo chmod -R 777 Functional_Testing/target
-        sudo chmod -R 777 allure-results
-        sudo chmod -R 777 allure-report
-        sudo chmod -R 777 allure-history
-        rm -rf API_Testing/target
-        rm -rf Functional_Testing/target
-        rm -rf allure-results
-        rm -rf allure-report
-        rm -rf allure-history
+        sudo chmod -R 777 API_Testing/target || true
+        sudo chmod -R 777 Functional_Testing/target || true
+        sudo chmod -R 777 allure-results || true
+        sudo chmod -R 777 allure-report || true
+        sudo chmod -R 777 allure-history || true
+        rm -rf API_Testing/target || true
+        rm -rf Functional_Testing/target || true
+        rm -rf allure-results || true
+        rm -rf allure-report || true
+        rm -rf allure-history || true
