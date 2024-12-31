@@ -5,27 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fecf50d-b981-4e00-bbc6-1bc5eff997d1" name="Changes" comment="Add product to cart verification">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jenkinsfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/qa/pages/ProductPage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/qa/utils/DriverManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/qa/runners/TestRunner.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/qa/steps/ProductSteps.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/features/product.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/testing.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qa/pages/ProductPage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/qa/utils/DriverManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/cucumber-reports.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/qa/runners/TestRunner.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/qa/steps/ProductSteps.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/features/product.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/testing.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Functional_Testing/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Functional_Testing/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +26,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
   <component name="ProjectId" id="2pUJRtfZ1YmKCLrSAJoPsau32EZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -55,11 +40,20 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Projects/Group45/Group45_UITesting/Functional_Testing",
+    "git-widget-placeholder": "api/test/TC006-post-book-2",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/matheshyogeswaran/Desktop/Uni/ITQA/Group_45",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="TestNG.TestRunner">
@@ -117,6 +111,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -140,6 +142,7 @@
       <workItem from="1734329517863" duration="1043000" />
       <workItem from="1734330625539" duration="3523000" />
       <workItem from="1734355818345" duration="33000" />
+      <workItem from="1735063212294" duration="660000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Set Up">
       <created>1732815709240</created>

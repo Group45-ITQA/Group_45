@@ -53,6 +53,10 @@ public class SocialMediaPage {
         return currentUrl.toLowerCase().contains(expectedUrl.toLowerCase());
     }
 
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
     private void handleWindowSwitch() {
         String originalWindow = driver.getWindowHandle();
         Set<String> windowHandles = driver.getWindowHandles();

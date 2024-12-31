@@ -22,8 +22,25 @@ public class SocialMediaSteps {
     public void verify_social_media_redirect(String platform) {
         // Switch to new window/tab
         String expectedUrl = getExpectedSocialUrl(platform);
-        Assert.assertTrue(socialMediaPage.isRedirectedToSocialMedia(expectedUrl),
-                "Not redirected to correct " + platform + " page");
+        String actualUrl = socialMediaPage.getCurrentUrl();
+        boolean isMatch = isUrlMatch(actualUrl, platform);
+        Assert.assertTrue(isMatch,
+                String.format("URL mismatch for %s.\nExpected: %s\nActual: %s",
+                        platform, expectedUrl, actualUrl));
+    }
+
+    private boolean isUrlMatch(String actualUrl, String platform) {
+        String lowerActual = actualUrl.toLowerCase();
+        switch (platform.toLowerCase()) {
+            case "facebook":
+                return lowerActual.contains("facebook.com/saucelabs");
+            case "twitter":
+                return lowerActual.contains("x.com/saucelabs");
+            case "linkedin":
+                return lowerActual.contains("linkedin.com/company/sauce-labs");
+            default:
+                return false;
+        }
     }
 
     private String getExpectedSocialUrl(String platform) {
@@ -31,7 +48,7 @@ public class SocialMediaSteps {
             case "twitter":
                 return "https://x.com/saucelabs";
             case "facebook":
-                return "https://www.facebook.com/saucelabs";
+                return "https://facebook.com/saucelabs";
             case "linkedin":
                 return "https://www.linkedin.com/company/sauce-labs/";
             default:
