@@ -5,7 +5,7 @@ Feature: Checkout Form Validation
 
   Background:
     Given I am logged in and on the products page
-    And I have "Sauce Labs Backpack" in my cart
+    And I have added "Sauce Labs Backpack" to the cart
 
   @checkout_form @field_validation @critical
   Scenario: Verify checkout form fields maintain entered values correctly

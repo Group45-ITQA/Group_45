@@ -20,14 +20,6 @@ public class CheckoutInputValidationSteps {
         checkoutPage = new CheckoutPage();
     }
 
-    @Given("I have {string} in my cart")
-    @Step("Adding item to cart: {0}")
-    public void i_have_item_in_my_cart(String itemName) {
-        cartPage.addItemToCart(itemName);
-        Assert.assertEquals(cartPage.getItemCount(), "1",
-                "Product '" + itemName + "' was not added to cart successfully. Cart count is not 1");
-    }
-
     @When("I enter {string} in the first name field")
     @Step("Entering first name: {0}")
     public void i_enter_in_the_first_name_field(String firstName) {
