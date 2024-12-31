@@ -5,7 +5,7 @@ Feature: Product Cart Functionality
   So that I can purchase them
 
   Background:
-    Given I am logged in and on the products page for cart management
+    Given I am logged in and on the products page
 
   @add_to_cart @critical
   Scenario: Add product to cart
