@@ -1,5 +1,6 @@
 package com.qa.steps;
 
+import com.qa.pages.CartPage;
 import com.qa.pages.LoginPage;
 import com.qa.pages.ProductPage;
 import io.cucumber.java.en.*;
@@ -11,11 +12,13 @@ import com.qa.utils.DriverManager;
 public class MultipleProductCartSteps {
     private ProductPage productPage;
     private LoginPage loginPage;
+    private CartPage cartPage;
 
     @Before
     public void setup() {
         productPage = new ProductPage();
         loginPage = new LoginPage();
+        cartPage = new CartPage();
     }
 
     @Given("I am logged in on the products page for multiple products")
@@ -32,7 +35,7 @@ public class MultipleProductCartSteps {
     public void verify_multiple_products_in_cart(int expectedCount) {
         Assert.assertTrue(productPage.areProductsAddedToCart(expectedCount),
                 "Expected " + expectedCount + " products in cart");
-        Assert.assertEquals(productPage.getCartCount(), String.valueOf(expectedCount));
+        Assert.assertEquals(cartPage.getItemCount(), String.valueOf(expectedCount));
     }
 
     @After

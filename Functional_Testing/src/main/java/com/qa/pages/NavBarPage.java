@@ -58,10 +58,6 @@ public class NavBarPage {
         pageUtils.click(resetButton);
     }
 
-    public void clickCart() {
-        headerComponent.clickCart();
-    }
-
     // Page Verification Methods
     public boolean isOnInventoryPage() {
         String expectedUrl = ConfigurationManager.getProperty("base.url") + "inventory.html";
@@ -78,15 +74,5 @@ public class NavBarPage {
         String currentUrl = driver.getCurrentUrl();
         return currentUrl.equals(baseUrl) ||
                 currentUrl.equals(baseUrl.substring(0, baseUrl.length() - 1));
-    }
-
-    // Cart Verification Methods
-    public boolean isCartEmpty() {
-        return !cartPage.isCheckoutButtonEnabled() ||
-                cartPage.isCartEmptyErrorMessageDisplayed();
-    }
-
-    public boolean verifyItemRemoved(String itemName) {
-        return !cartPage.isItemInCart(itemName);
     }
 }
