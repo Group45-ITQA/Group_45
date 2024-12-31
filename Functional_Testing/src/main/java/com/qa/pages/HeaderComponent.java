@@ -25,7 +25,7 @@ public class HeaderComponent {
         PageFactory.initElements(driver, this);
     }
 
-    public void clickCart() {
+    public void navigateToCart() {
         pageUtils.click(cartLink);
     }
 

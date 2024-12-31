@@ -26,7 +26,7 @@ public class CheckoutSteps {
     @Step("Adding item to cart: {0}")
     public void i_have_item_in_my_cart(String itemName) {
         cartPage.addItemToCart(itemName);
-        Assert.assertEquals(productPage.getCartCount(), "1",
+        Assert.assertEquals(cartPage.getItemCount(), "1",
                 "Product '" + itemName + "' was not added to cart successfully. Cart count is not 1");
     }
 

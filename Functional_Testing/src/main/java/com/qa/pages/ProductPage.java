@@ -24,8 +24,6 @@ public class ProductPage {
     private List<WebElement> inventoryItems;
 
     // Cart Elements
-    @FindBy(id = "add-to-cart-sauce-labs-backpack")
-    private WebElement addToCartButton;
 
     @FindBy(id = "remove-sauce-labs-backpack")
     private WebElement removeButton;
@@ -84,7 +82,7 @@ public class ProductPage {
 
     // Cart Operations
     public void addProductToCart() {
-        pageUtils.click(addToCartButton);
+        pageUtils.click(backpack);
     }
 
     public void addMultipleProductsToCart(int numberOfProducts) {
@@ -98,22 +96,12 @@ public class ProductPage {
         }
     }
 
-    public boolean isProductAddedToCart() {
-        try {
-            return pageUtils.isDisplayed(removeButton);
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
     public boolean areProductsAddedToCart(int expectedCount) {
-        WaitUtils.staticWait(1); // Maintaining original wait behavior
+        WaitUtils.staticWait(1);
         return removeButtons.size() == expectedCount;
     }
 
-    public String getCartCount() {
-        return headerComponent.getCartCount();
-    }
 
     // Filter Operations
     public void selectFilter(String filterOption) {
@@ -125,7 +113,7 @@ public class ProductPage {
     }
 
     public boolean verifyPriceLowToHighFilter() {
-        WaitUtils.staticWait(1); // Maintaining original wait behavior
+        WaitUtils.staticWait(1);
         List<Double> prices = new ArrayList<>();
         for (WebElement priceElement : productPrices) {
             String priceText = priceElement.getText().replace("$", "");

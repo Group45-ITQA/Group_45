@@ -1,5 +1,6 @@
 package com.qa.steps;
 
+import com.qa.pages.CartPage;
 import com.qa.pages.ProductPage;
 import io.cucumber.java.en.*;
 import io.qameta.allure.*;
@@ -10,9 +11,11 @@ import org.testng.Assert;
 @Story("Product Cart Functionality")
 public class ProductSteps {
     private ProductPage productPage;
+    private CartPage cartPage;
 
     public ProductSteps() {
         productPage = new ProductPage();
+        cartPage = new CartPage();
     }
 
     @When("I add a product to the cart")
@@ -22,6 +25,6 @@ public class ProductSteps {
 
     @Then("the cart count should be {string}")
     public void verify_cart_count(String expectedCount) {
-        Assert.assertEquals(productPage.getCartCount(), expectedCount);
+        Assert.assertEquals(cartPage.getItemCount(), expectedCount);
     }
 }
