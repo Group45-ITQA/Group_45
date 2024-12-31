@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class HeaderComponent {
-    private final WebDriver driver;
     private final PageUtils pageUtils;
 
     @FindBy(className = "shopping_cart_link")
@@ -20,7 +19,6 @@ public class HeaderComponent {
     private WebElement cartBadge;
 
     public HeaderComponent(WebDriver driver) {
-        this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         PageFactory.initElements(driver, this);
     }

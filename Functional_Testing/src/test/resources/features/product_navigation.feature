@@ -5,7 +5,7 @@ Feature: Product Details Navigation
   So that I can view the correct product details
 
   Background:
-    Given I am logged in and on the products page for product navigation
+    Given I am logged in and on the products page
 
   @product-navigation @defect @medium
   Scenario: Verify product link redirects to correct product

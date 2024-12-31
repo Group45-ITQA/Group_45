@@ -13,7 +13,6 @@ public class BaseSteps {
     private ProductPage productPage = new ProductPage();
 
 
-    @Given("I am logged in and on the products page for product navigation")
     @Given("I am logged in and on the products page for image verification")
 
     @Given("I am logged in and on the products page")

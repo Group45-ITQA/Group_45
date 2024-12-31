@@ -84,7 +84,7 @@ public class CartPage {
     }
 
     public boolean isCartEmpty() {
-        return getItemCount() == "0";
+        return getItemCount().equals("0");
     }
 
 
