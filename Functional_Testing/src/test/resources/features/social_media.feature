@@ -4,7 +4,7 @@ Feature: Social Media Links
   So that I can follow the company on different platforms
 
   Background:
-    Given I am logged in as problem user
+    Given I am logged in and on the products page
 
   Scenario Outline: Social media redirects
     When I click the "<platform>" social media link
