@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.locators.SocialMediaLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,13 +16,13 @@ public class SocialMediaPage {
     private final PageUtils pageUtils;
 
     // Social Media Links
-    @FindBy(css = "li.social_twitter a")
+    @FindBy(css = SocialMediaLocators.TWITTER_LINK_SELECTOR)
     private WebElement twitterLink;
 
-    @FindBy(css = "li.social_facebook a")
+    @FindBy(css = SocialMediaLocators.FACEBOOK_LINK_SELECTOR)
     private WebElement facebookLink;
 
-    @FindBy(css = "li.social_linkedin a")
+    @FindBy(css = SocialMediaLocators.LINKEDIN_LINK_SELECTOR)
     private WebElement linkedinLink;
 
     public SocialMediaPage() {

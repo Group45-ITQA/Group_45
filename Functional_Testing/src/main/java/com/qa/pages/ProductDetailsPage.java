@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.locators.ProductDetailsPageLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,22 +14,22 @@ public class ProductDetailsPage {
     private final PageUtils pageUtils;
     private final HeaderComponent headerComponent;
 
-    @FindBy(css = ".inventory_details_container")
+    @FindBy(css = ProductDetailsPageLocators.DETAILS_CONTAINER_CLASS)
     private WebElement productDetailsContainer;
 
-    @FindBy(css = ".inventory_details_name")
+    @FindBy(css = ProductDetailsPageLocators.PRODUCT_NAME_CLASS)
     private WebElement productName;
 
-    @FindBy(css = ".inventory_details_desc")
+    @FindBy(css = ProductDetailsPageLocators.PRODUCT_DESC_CLASS)
     private WebElement productDescription;
 
-    @FindBy(css = ".inventory_details_price")
+    @FindBy(css = ProductDetailsPageLocators.PRODUCT_PRICE_CLASS)
     private WebElement productPrice;
 
-    @FindBy(css = "button[id^='add-to-cart']")
+    @FindBy(css = ProductDetailsPageLocators.ADD_TO_CART_SELECTOR)
     private WebElement addToCartButton;
 
-    @FindBy(css = "button[id^='remove']")
+    @FindBy(css = ProductDetailsPageLocators.REMOVE_SELECTOR)
     private WebElement removeButton;
 
     public ProductDetailsPage() {

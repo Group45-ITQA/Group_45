@@ -1,6 +1,6 @@
 package com.qa.pages;
 
-import org.openqa.selenium.By;
+import com.qa.locators.ProductPageLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,41 +20,38 @@ public class ProductPage {
     private final HeaderComponent headerComponent;
 
     // Product List Elements
-    @FindBy(className = "inventory_item")
+    @FindBy(className = ProductPageLocators.INVENTORY_ITEM_CLASS)
     private List<WebElement> inventoryItems;
 
     // Cart Elements
 
-    @FindBy(id = "remove-sauce-labs-backpack")
-    private WebElement removeButton;
-
-    @FindBy(id = "add-to-cart-sauce-labs-backpack")
+    @FindBy(id = ProductPageLocators.BACKPACK_ID)
     private WebElement backpack;
 
-    @FindBy(id = "add-to-cart-sauce-labs-bike-light")
+    @FindBy(id = ProductPageLocators.BIKE_LIGHT_ID)
     private WebElement bikeLight;
 
-    @FindBy(css = "[id^='remove']")
+    @FindBy(css = ProductPageLocators.REMOVE_BUTTONS)
     private List<WebElement> removeButtons;
 
-    @FindBy(css = "[id^='add-to-cart']")
+    @FindBy(css = ProductPageLocators.ADD_TO_CART_BUTTONS)
     private List<WebElement> addToCartButtons;
 
     // Product Details Elements
-    @FindBy(css = ".inventory_item_name")
+    @FindBy(css = ProductPageLocators.PRODUCT_NAME_CLASS)
     private List<WebElement> productLinks;
 
-    @FindBy(css = ".inventory_details_name")
+    @FindBy(css = ProductPageLocators.PRODUCT_DETAIL_CLASS)
     private WebElement productDetailName;
 
-    @FindBy(css = ".inventory_item_img img")
+    @FindBy(css = ProductPageLocators.PRODUCT_IMAGE_SELECTOR)
     private List<WebElement> productImages;
 
     // Filter Elements
-    @FindBy(className = "product_sort_container")
+    @FindBy(className = ProductPageLocators.PRODUCT_SORT_CLASS)
     private WebElement filterDropdown;
 
-    @FindBy(className = "inventory_item_price")
+    @FindBy(className = ProductPageLocators.PRODUCT_PRICE_CLASS)
     private List<WebElement> productPrices;
 
     private List<WebElement> workingProducts;

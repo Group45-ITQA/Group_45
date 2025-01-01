@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.locators.HeaderComponentLocators;
 import com.qa.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,13 +10,13 @@ import org.openqa.selenium.support.PageFactory;
 public class HeaderComponent {
     private final PageUtils pageUtils;
 
-    @FindBy(className = "shopping_cart_link")
+    @FindBy(className = HeaderComponentLocators.CART_LINK_CLASS)
     private WebElement cartLink;
 
-    @FindBy(id = "react-burger-menu-btn")
+    @FindBy(id = HeaderComponentLocators.MENU_BUTTON_ID)
     private WebElement menuButton;
 
-    @FindBy(className = "shopping_cart_badge")
+    @FindBy(className = HeaderComponentLocators.CART_BADGE_CLASS)
     private WebElement cartBadge;
 
     public HeaderComponent(WebDriver driver) {

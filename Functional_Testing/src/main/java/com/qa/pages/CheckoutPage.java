@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.locators.CheckoutPageLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,16 +12,16 @@ public class CheckoutPage {
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
-    @FindBy(id = "first-name")
+    @FindBy(id = CheckoutPageLocators.FIRST_NAME_ID)
     private WebElement firstNameField;
 
-    @FindBy(id = "last-name")
+    @FindBy(id = CheckoutPageLocators.LAST_NAME_ID)
     private WebElement lastNameField;
 
-    @FindBy(id = "postal-code")
+    @FindBy(id = CheckoutPageLocators.POSTAL_CODE_ID)
     private WebElement postalCodeField;
 
-    @FindBy(id = "continue")
+    @FindBy(id = CheckoutPageLocators.CONTINUE_BUTTON_ID)
     private WebElement continueButton;
 
     public CheckoutPage() {

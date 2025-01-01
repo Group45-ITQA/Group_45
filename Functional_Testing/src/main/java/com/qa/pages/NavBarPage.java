@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.locators.NavBarLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,16 +16,16 @@ public class NavBarPage {
     private final CartPage cartPage;
 
     // Navigation Menu Elements
-    @FindBy(id = "inventory_sidebar_link")
+    @FindBy(id = NavBarLocators.ALL_ITEMS_ID)
     private WebElement allItemsButton;
 
-    @FindBy(id = "about_sidebar_link")
+    @FindBy(id = NavBarLocators.ABOUT_ID)
     private WebElement aboutButton;
 
-    @FindBy(id = "logout_sidebar_link")
+    @FindBy(id = NavBarLocators.LOGOUT_ID)
     private WebElement logoutButton;
 
-    @FindBy(id = "reset_sidebar_link")
+    @FindBy(id = NavBarLocators.RESET_ID)
     private WebElement resetButton;
 
     public NavBarPage() {
