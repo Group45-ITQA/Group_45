@@ -5,7 +5,7 @@ Feature: Product Filtering
   So that I can view them in my preferred order
 
   Background:
-    Given I am logged in and on the products page for filtering
+    Given I am logged in and on the products page
 
   @filter @defect @medium
   Scenario: Verify price low to high filter

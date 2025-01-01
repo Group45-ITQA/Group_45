@@ -5,7 +5,7 @@ Feature: Product Image Verification
   So that I can ensure each product has unique images
 
   Background:
-    Given I am logged in and on the products page for image verification
+    Given I am logged in and on the products page
 
   @image-verification @defect @medium
   Scenario: Verify product images are unique

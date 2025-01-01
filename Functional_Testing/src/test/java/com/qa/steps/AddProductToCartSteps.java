@@ -9,11 +9,11 @@ import org.testng.Assert;
 @Epic("Shopping Cart Features")
 @Feature("Product Cart Management")
 @Story("Product Cart Functionality")
-public class ProductSteps {
+public class AddProductToCartSteps {
     private ProductPage productPage;
     private CartPage cartPage;
 
-    public ProductSteps() {
+    public AddProductToCartSteps() {
         productPage = new ProductPage();
         cartPage = new CartPage();
     }
