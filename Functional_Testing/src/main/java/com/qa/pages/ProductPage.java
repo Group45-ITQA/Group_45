@@ -37,6 +37,9 @@ public class ProductPage {
     @FindBy(css = "[id^='remove']")
     private List<WebElement> removeButtons;
 
+    @FindBy(css = "[id^='add-to-cart']")
+    private List<WebElement> addToCartButtons;
+
     // Product Details Elements
     @FindBy(css = ".inventory_item_name")
     private List<WebElement> productLinks;
@@ -94,6 +97,19 @@ public class ProductPage {
                 pageUtils.click(product);
             }
         }
+    }
+
+    public int addAllProductsToCart() {
+        int addedProducts = 0;
+        for (WebElement button : addToCartButtons) {
+            try {
+                pageUtils.click(button);
+                addedProducts++;
+            } catch (Exception e) {
+                System.out.println("Failed to add product: " + e.getMessage());
+            }
+        }
+        return addedProducts;
     }
 
 
