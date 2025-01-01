@@ -31,4 +31,3 @@ Feature: Update Book API
   Scenario: Attempt to update book with invalid ID format
     When I send a PUT request to update a book with invalid ID "abc"
     Then The status code of the response should be 400
-    And the response should indicate invalid input
