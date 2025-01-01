@@ -1,24 +1,30 @@
     package com.qa.steps;
 
     import com.qa.pages.CartPage;
+    import com.qa.pages.HeaderComponent;
     import com.qa.pages.LoginPage;
     import com.qa.pages.NavBarPage;
     import io.cucumber.java.en.*;
     import io.cucumber.java.After;
     import io.cucumber.java.Before;
+    import org.openqa.selenium.WebDriver;
     import org.testng.Assert;
     import com.qa.utils.DriverManager;
 
     public class NavigationSteps {
+        private  WebDriver driver;
         private NavBarPage navBarPage;
         private LoginPage loginPage;
         private CartPage cartPage;
+        private HeaderComponent headerComponent;
 
         @Before
         public void setup() {
+            driver = DriverManager.getDriver();
             navBarPage = new NavBarPage();
             loginPage = new LoginPage();
             cartPage = new CartPage();
+            headerComponent = new HeaderComponent(driver);
         }
 
         @Given("I am logged in as problem user")
@@ -58,7 +64,7 @@
 
         @When("I click the cart button")
         public void i_click_cart() {
-            navBarPage.clickCart();
+            headerComponent.navigateToCart();
         }
 
 
@@ -83,7 +89,7 @@
 
         @Then("the {string} should not be in the cart")
         public void verify_item_not_in_cart(String itemName) {
-            cartPage.goToCartPage();
+            headerComponent.navigateToCart();
             Assert.assertFalse(cartPage.isItemInCart(itemName),
                     "Item " + itemName + " is still in cart after reset");
         }

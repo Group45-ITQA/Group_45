@@ -11,31 +11,13 @@ import com.qa.utils.DriverManager;
 @Epic("Checkout Features")
 @Feature("Checkout Form Validation")
 @Story("Form Field Value Retention")
-public class CheckoutSteps {
+public class CheckoutInputValidationSteps {
     private final CartPage cartPage;
     private final CheckoutPage checkoutPage;
-    private final ProductPage productPage;
 
-    public CheckoutSteps() {
+    public CheckoutInputValidationSteps() {
         cartPage = new CartPage();
         checkoutPage = new CheckoutPage();
-        productPage = new ProductPage();
-    }
-
-    @Given("I have {string} in my cart")
-    @Step("Adding item to cart: {0}")
-    public void i_have_item_in_my_cart(String itemName) {
-        cartPage.addItemToCart(itemName);
-        Assert.assertEquals(productPage.getCartCount(), "1",
-                "Product '" + itemName + "' was not added to cart successfully. Cart count is not 1");
-    }
-
-    @When("I proceed to the checkout page")
-    @Step("Navigating to checkout")
-    public void i_proceed_to_the_checkout_page() {
-        Assert.assertTrue(cartPage.isCheckoutButtonEnabled(),
-                "Checkout button is not enabled");
-        cartPage.attemptToCheckout();
     }
 
     @When("I enter {string} in the first name field")

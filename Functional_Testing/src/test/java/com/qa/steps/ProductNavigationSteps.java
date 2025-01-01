@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 @Epic("Product Features")
 @Feature("Product Details Navigation")
+@Story("Product Link Navigation Validation")
 public class ProductNavigationSteps {
     private ProductPage productPage;
 

@@ -4,8 +4,8 @@ Feature: Checkout Form Validation
   So that I can complete my purchase accurately
 
   Background:
-    Given I am logged in to the Sauce Demo website
-    And I have "Sauce Labs Backpack" in my cart
+    Given I am logged in and on the products page
+    And I have added "Sauce Labs Backpack" to the cart
 
   @checkout_form @field_validation @critical
   Scenario: Verify checkout form fields maintain entered values correctly

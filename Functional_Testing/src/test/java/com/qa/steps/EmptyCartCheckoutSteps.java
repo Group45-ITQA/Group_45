@@ -9,10 +9,10 @@ import io.qameta.allure.*;
 @Epic("Shopping Cart Features")
 @Feature("Cart Checkout Management")
 @Story("Empty Cart Checkout Functionality")
-public class CartSteps {
-    private CartPage cartPage;
+public class EmptyCartCheckoutSteps {
+    private final CartPage cartPage;
 
-    public CartSteps() {
+    public EmptyCartCheckoutSteps() {
         cartPage = new CartPage();
     }
 
@@ -20,12 +20,6 @@ public class CartSteps {
     @Step("Verifying cart is empty")
     public void my_shopping_cart_is_empty() {
         Assert.assertTrue(cartPage.isCartEmpty(), "Cart should be empty");
-    }
-
-    @When("I click on the checkout button")
-    @Step("Attempting to checkout")
-    public void i_click_on_the_checkout_button() {
-        cartPage.attemptToCheckout();
     }
 
     @Then("I should not be able to proceed with checkout")

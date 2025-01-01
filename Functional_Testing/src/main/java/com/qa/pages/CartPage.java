@@ -16,17 +16,18 @@ public class CartPage {
     private final PageUtils pageUtils;
     private final HeaderComponent headerComponent;
 
+    private static final String CART_ITEM_CLASS = "cart_item";
+    private static final String BUTTON_ID_FORMAT = "%s-%s";
+    private static final String ITEM_ID_FORMAT = "item_%s_title_link";
+
     @FindBy(id = "checkout")
     private WebElement checkoutButton;
 
     @FindBy(className = "error-message-container")
     private WebElement errorMessage;
 
-    @FindBy(id = "item_4_title_link")
-    private WebElement backpackItem;
-
-    @FindBy(id = "item_0_title_link")
-    private WebElement bikeLightItem;
+    @FindBy(className = CART_ITEM_CLASS)
+    private List<WebElement> cartItems;
 
     public CartPage() {
         this.driver = DriverManager.getDriver();
@@ -35,27 +36,66 @@ public class CartPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void goToCartPage() {
-        headerComponent.clickCart();
+
+    private String formatItemName(String itemName) {
+        return itemName.replace(" ", "-").toLowerCase();
     }
+
 
     public void addItemToCart(String itemName) {
-        String buttonId = "add-to-cart-" + itemName.replace(" ", "-").toLowerCase();
-        WebElement addItemButton = driver.findElement(By.id(buttonId));
-        pageUtils.click(addItemButton);
+        String formattedName = formatItemName(itemName);
+        String buttonId = String.format(BUTTON_ID_FORMAT, "add-to-cart", formattedName);
+
+        try {
+            WebElement addButton = driver.findElement(By.id(buttonId));
+            pageUtils.click(addButton);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not find add button for item: " + itemName, e);
+        }
     }
 
+
     public void removeItemFromCart(String itemName) {
-        String buttonId = "remove-" + itemName.replace(" ", "-").toLowerCase();
-        WebElement removeItemButton = driver.findElement(By.id(buttonId));
-        pageUtils.click(removeItemButton);
+        String formattedName = formatItemName(itemName);
+        String buttonId = String.format(BUTTON_ID_FORMAT, "remove", formattedName);
+
+        try {
+            WebElement removeButton = driver.findElement(By.id(buttonId));
+            pageUtils.click(removeButton);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not find remove button for item: " + itemName, e);
+        }
     }
 
     public boolean isItemInCart(String itemName) {
+        String formattedName = formatItemName(itemName);
+        String itemId = String.format(ITEM_ID_FORMAT, formattedName);
+
         try {
-            String itemId = "item_" + itemName.replace(" ", "-").toLowerCase() + "_title_link";
-            WebElement item = driver.findElement(By.id(itemId));
-            return WaitUtils.waitForElementVisible(driver, item, 5);
+            return WaitUtils.waitForElementVisible(driver, driver.findElement(By.id(itemId)), 5);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    public String getItemCount() {
+        return headerComponent.getCartCount();
+    }
+
+    public boolean isCartEmpty() {
+        return getItemCount().equals("0");
+    }
+
+
+    public boolean attemptToCheckout() {
+        if (!isCheckoutButtonEnabled()) {
+            return false;
+        }
+
+        try {
+            pageUtils.click(checkoutButton);
+            return true;
         } catch (Exception e) {
             return false;
         }
@@ -66,21 +106,8 @@ public class CartPage {
                 checkoutButton.isEnabled();
     }
 
-    public void attemptToCheckout() {
-        pageUtils.click(checkoutButton);
-    }
 
-    public boolean isCartEmpty() {
-        try {
-            List<WebElement> cartItems = driver.findElements(By.className("cart_item"));
-            WaitUtils.staticWait(1);
-            return cartItems.isEmpty();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public boolean isCartEmptyErrorMessageDisplayed() {
+    public boolean hasEmptyCartError() {
         return WaitUtils.waitForElementVisible(driver, errorMessage, 5);
     }
 }
