@@ -2,67 +2,54 @@
 
     import com.qa.pages.CartPage;
     import com.qa.pages.HeaderComponent;
-    import com.qa.pages.LoginPage;
     import com.qa.pages.NavBarPage;
     import io.cucumber.java.en.*;
     import io.cucumber.java.After;
-    import io.cucumber.java.Before;
+    import io.qameta.allure.Step;
     import org.openqa.selenium.WebDriver;
     import org.testng.Assert;
     import com.qa.utils.DriverManager;
 
     public class NavigationSteps {
-        private  WebDriver driver;
-        private NavBarPage navBarPage;
-        private LoginPage loginPage;
-        private CartPage cartPage;
-        private HeaderComponent headerComponent;
+        private final WebDriver driver;
+        private final NavBarPage navBarPage;
+        private final CartPage cartPage;
+        private final HeaderComponent headerComponent;
 
-        @Before
-        public void setup() {
+        public NavigationSteps() {
             driver = DriverManager.getDriver();
             navBarPage = new NavBarPage();
-            loginPage = new LoginPage();
             cartPage = new CartPage();
             headerComponent = new HeaderComponent(driver);
         }
 
-        @Given("I am logged in as problem user")
-        public void i_am_logged_in_as_problem_user() {
-            loginPage.login();
-        }
-
-        @Given("I have added {string} to cart")
-        public void i_have_added_item_to_cart(String itemName) {
-            cartPage.addItemToCart(itemName);
-        }
 
         @When("I click the menu button")
+        @Step("Clicking menu button")
         public void i_click_menu_button() {
             navBarPage.clickMenu();
         }
 
         @When("I click the All Items link")
+        @Step("Clicking All Items link")
         public void i_click_all_items() {
             navBarPage.clickAllItems();
         }
 
-        @When("I click the About link")
-        public void i_click_about() {
-            navBarPage.clickAbout();
-        }
-
         @When("I click the Logout link")
+        @Step("Clicking Logout link")
         public void i_click_logout() {
             navBarPage.clickLogout();
         }
 
         @When("I click the Reset App State link")
+        @Step("Clicking Reset App State link")
         public void i_click_reset() {
             navBarPage.clickReset();
         }
 
         @When("I click the cart button")
+        @Step("Clicking cart button")
         public void i_click_cart() {
             headerComponent.navigateToCart();
         }
@@ -70,24 +57,28 @@
 
 
         @Then("I should be on the inventory page")
+        @Step("Verifying navigation to inventory page")
         public void verify_on_inventory_page() {
             Assert.assertTrue(navBarPage.isOnInventoryPage(),
                     "Not on inventory page");
         }
 
         @Then("I should be on the cart page")
+        @Step("Verifying navigation to cart page")
         public void verify_on_cart_page() {
             Assert.assertTrue(navBarPage.isOnCartPage(),
                     "Not on cart page");
         }
 
         @Then("I should be on the login page")
+        @Step("Verifying navigation to login page")
         public void verify_on_login_page() {
             Assert.assertTrue(navBarPage.isOnLoginPage(),
                     "Not on login page");
         }
 
         @Then("the {string} should not be in the cart")
+        @Step("Verifying item {0} is not in cart")
         public void verify_item_not_in_cart(String itemName) {
             headerComponent.navigateToCart();
             Assert.assertFalse(cartPage.isItemInCart(itemName),
