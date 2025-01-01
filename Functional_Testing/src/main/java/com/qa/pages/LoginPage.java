@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.locators.LoginPageLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,13 +13,13 @@ public class LoginPage {
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
-    @FindBy(id = "user-name")
+    @FindBy(id = LoginPageLocators.USERNAME_ID)
     private WebElement usernameField;
 
-    @FindBy(id = "password")
+    @FindBy(id = LoginPageLocators.PASSWORD_ID)
     private WebElement passwordField;
 
-    @FindBy(id = "login-button")
+    @FindBy(id = LoginPageLocators.LOGIN_BUTTON_ID)
     private WebElement loginButton;
 
     public LoginPage() {

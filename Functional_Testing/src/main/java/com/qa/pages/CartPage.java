@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.locators.CartPageLocators;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,17 +17,13 @@ public class CartPage {
     private final PageUtils pageUtils;
     private final HeaderComponent headerComponent;
 
-    private static final String CART_ITEM_CLASS = "cart_item";
-    private static final String BUTTON_ID_FORMAT = "%s-%s";
-    private static final String ITEM_ID_FORMAT = "item_%s_title_link";
-
-    @FindBy(id = "checkout")
+    @FindBy(id = CartPageLocators.CHECKOUT_BUTTON_ID)
     private WebElement checkoutButton;
 
-    @FindBy(className = "error-message-container")
+    @FindBy(className = CartPageLocators.ERROR_MESSAGE_CLASS)
     private WebElement errorMessage;
 
-    @FindBy(className = CART_ITEM_CLASS)
+    @FindBy(className = CartPageLocators.CART_ITEM_CLASS)
     private List<WebElement> cartItems;
 
     public CartPage() {
@@ -44,7 +41,7 @@ public class CartPage {
 
     public void addItemToCart(String itemName) {
         String formattedName = formatItemName(itemName);
-        String buttonId = String.format(BUTTON_ID_FORMAT, "add-to-cart", formattedName);
+        String buttonId = String.format(CartPageLocators.BUTTON_ID_FORMAT, "add-to-cart", formattedName);
 
         try {
             WebElement addButton = driver.findElement(By.id(buttonId));
@@ -57,7 +54,7 @@ public class CartPage {
 
     public void removeItemFromCart(String itemName) {
         String formattedName = formatItemName(itemName);
-        String buttonId = String.format(BUTTON_ID_FORMAT, "remove", formattedName);
+        String buttonId = String.format(CartPageLocators.BUTTON_ID_FORMAT, "remove", formattedName);
 
         try {
             WebElement removeButton = driver.findElement(By.id(buttonId));
@@ -69,7 +66,7 @@ public class CartPage {
 
     public boolean isItemInCart(String itemName) {
         String formattedName = formatItemName(itemName);
-        String itemId = String.format(ITEM_ID_FORMAT, formattedName);
+        String itemId = String.format(CartPageLocators.ITEM_TITLE_FORMAT, formattedName);
 
         try {
             return WaitUtils.waitForElementVisible(driver, driver.findElement(By.id(itemId)), 5);
