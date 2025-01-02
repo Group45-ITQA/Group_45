@@ -8,10 +8,15 @@ Feature: Checkout Form Validation
     And I have added "Sauce Labs Backpack" to the cart
 
   @checkout_form @field_validation @critical
-  Scenario: Verify checkout form fields maintain entered values correctly
+  Scenario: Verify the first name field retains the entered value
     When I navigate to the cart page
     And I proceed to the checkout page
     And I enter "John" in the first name field
-    And I enter "Doe" in the last name field
     Then the first name field should contain "John"
-    And the last name field should contain "Doe"
+
+  @checkout_form @field_validation @defect @critical
+  Scenario: Verify the last name field retains the entered value
+    When I navigate to the cart page
+    And I proceed to the checkout page
+    And I enter "Doe" in the last name field
+    Then the last name field should contain "Doe"

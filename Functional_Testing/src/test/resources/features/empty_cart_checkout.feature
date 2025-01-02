@@ -7,7 +7,7 @@ Feature: Cart Checkout Functionality
   Background:
     Given I am logged in and on the products page
 
-  @empty_cart @critical
+  @empty_cart @defect @critical
   Scenario: Verify checkout is not possible with an empty cart
     When I navigate to the cart page
     And my shopping cart is empty

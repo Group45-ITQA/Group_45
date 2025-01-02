@@ -23,12 +23,14 @@ public class CheckoutInputValidationSteps {
     @When("I enter {string} in the first name field")
     @Step("Entering first name: {0}")
     public void i_enter_in_the_first_name_field(String firstName) {
+
         checkoutPage.enterFirstName(firstName);
     }
 
     @When("I enter {string} in the last name field")
     @Step("Entering last name: {0}")
     public void i_enter_in_the_last_name_field(String lastName) {
+
         checkoutPage.enterLastName(lastName);
     }
 
