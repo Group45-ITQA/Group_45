@@ -11,4 +11,6 @@ public class ProductPageLocators {
     public static final String PRODUCT_IMAGE_SELECTOR = ".inventory_item_img img";
     public static final String ADD_TO_CART_BUTTONS = "[id^='add-to-cart']";
     public static final String REMOVE_BUTTONS = "[id^='remove']";
+
+    public static final String BUTTON_ID_FORMAT = "%s-%s";
 }

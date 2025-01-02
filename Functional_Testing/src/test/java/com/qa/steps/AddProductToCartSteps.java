@@ -18,13 +18,8 @@ public class AddProductToCartSteps {
         cartPage = new CartPage();
     }
 
-    @When("I add a product to the cart")
-    public void i_add_product_to_cart() {
-        productPage.addProductToCart();
-    }
-
-    @Then("the cart count should be {string}")
-    public void verify_cart_count(String expectedCount) {
-        Assert.assertEquals(cartPage.getItemCount(), expectedCount);
+    @When("I add {string} to the cart")
+    public void i_add_product_to_cart(String itemName) {
+        productPage.addItemToCart(itemName);
     }
 }

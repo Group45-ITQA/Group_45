@@ -1,6 +1,8 @@
 package com.qa.pages;
 
+import com.qa.locators.CartPageLocators;
 import com.qa.locators.ProductPageLocators;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -81,8 +83,16 @@ public class ProductPage {
     }
 
     // Cart Operations
-    public void addProductToCart() {
-        pageUtils.click(backpack);
+    public void addItemToCart(String itemName) {
+        String formattedName = formatItemName(itemName);
+        String buttonId = String.format(ProductPageLocators.BUTTON_ID_FORMAT, "add-to-cart", formattedName);
+
+        try {
+            WebElement addButton = driver.findElement(By.id(buttonId));
+            pageUtils.click(addButton);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not find add button for item: " + itemName, e);
+        }
     }
 
     public void addMultipleProductsToCart(int numberOfProducts) {
@@ -173,5 +183,27 @@ public class ProductPage {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void clickButtonById(String buttonId) {
+        try {
+            WebElement button = driver.findElement(By.id(buttonId));
+            pageUtils.click(button);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to click button with id: " + buttonId, e);
+        }
+    }
+
+    public boolean isButtonVisible(String buttonId) {
+        try {
+            WebElement button = driver.findElement(By.id(buttonId));
+            return WaitUtils.waitForElementVisible(driver, button, 5);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private String formatItemName(String itemName) {
+        return itemName.replace(" ", "-").toLowerCase();
     }
 }

@@ -38,20 +38,6 @@ public class CartPage {
         return itemName.replace(" ", "-").toLowerCase();
     }
 
-
-    public void addItemToCart(String itemName) {
-        String formattedName = formatItemName(itemName);
-        String buttonId = String.format(CartPageLocators.BUTTON_ID_FORMAT, "add-to-cart", formattedName);
-
-        try {
-            WebElement addButton = driver.findElement(By.id(buttonId));
-            pageUtils.click(addButton);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Could not find add button for item: " + itemName, e);
-        }
-    }
-
-
     public void removeItemFromCart(String itemName) {
         String formattedName = formatItemName(itemName);
         String buttonId = String.format(CartPageLocators.BUTTON_ID_FORMAT, "remove", formattedName);
