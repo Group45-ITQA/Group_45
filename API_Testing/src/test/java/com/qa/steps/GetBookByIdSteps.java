@@ -1,26 +1,17 @@
 package com.qa.steps;
 
 import io.cucumber.java.en.*;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.testng.Assert;
 import io.qameta.allure.*;
 import com.qa.models.Book;
 import com.qa.testdata.TestDataSetup;
 import static com.qa.config.TestConfig.*;
-import com.qa.utils.*;
 
 @Epic("LibraryAPITesting")
 @Feature("BookManagement")
+@Story("GetValidBook")
 public class GetBookByIdSteps {
-    private RequestSpecification request;
-    private Response response;
-    private Integer storedBookId; // Add this to store the ID
-
-    @Given("I am authenticated as an admin user to get a specific book")
-    public void setupAdminAuthentication() {
-        request = AuthenticationUtils.getAuthenticatedRequest();
-    }
+    private Integer storedBookId;
 
     @Given("I have a valid book ID from the created books")
     public void getValidBookId() {
@@ -30,23 +21,16 @@ public class GetBookByIdSteps {
 
     @When("I send a request to get the book with the stored ID")
     public void getBookById() {
-        response = request
-                .when()
-                .get(BOOKS_ENDPOINT + "/" + storedBookId);
-
-        if (response != null && response.getBody() != null) {
-            Allure.addAttachment("Response Body", response.getBody().asString());
-        }
-    }
-
-    @Then("the get book by id response status code should be {int}")
-    public void verifyResponseStatusCode(int expectedStatusCode) {
-        ResponseValidator.verifyStatusCode(response, expectedStatusCode);
+        BaseSteps.setResponse(
+                BaseSteps.getRequest()
+                        .when()
+                        .get(BOOKS_ENDPOINT + "/" + storedBookId)
+        );
     }
 
     @Then("the response should contain valid book details")
     public void verifyBookDetails() {
-        Book responseBook = response.as(Book.class);
+        Book responseBook = BaseSteps.getResponse().as(Book.class);
 
         Assert.assertNotNull(responseBook, "Book should not be null");
         Assert.assertNotNull(responseBook.getId(), "Book ID should not be null");
