@@ -6,10 +6,12 @@ Feature: Get All Books API
   I want to retrieve all books in the system
   So that I can view the complete library catalog
 
+  Background:
+    Given I am authenticated as "admin" user
+
   @GetAllBooks
   @severity:critical
   Scenario: Successfully retrieve all books via GET endpoint
-    Given I am authenticated as an admin user with credentials
     When I send a request to get all books from the library
-    Then the get all books response status code should be 200
+    Then The status code of the response should be 200
     And the response should contain a list of books with valid details
