@@ -12,13 +12,14 @@ import static com.qa.config.TestConfig.*;
 @Feature("BookManagement")
 @Story("UpdateValidBook")
 public class UpdateBookSteps {
-    private Integer storedBookId;
+    private static Integer storedBookId;
     private Book bookToUpdate;
     private static final String TEST_BOOK_AUTHOR = "Test Author For Updates";
 
     @Given("I have a valid book ID to update")
     public void getValidBookId() {
-        storedBookId = TestDataSetup.createTestBook(BaseSteps.getRequest(), "Initial Test Book", TEST_BOOK_AUTHOR);
+        storedBookId = TestDataSetup.getFirstBookId();
+        Assert.assertNotNull(storedBookId, "No test books found in database");
     }
 
     @When("I send a PUT request to update the book with the stored ID")
@@ -43,5 +44,9 @@ public class UpdateBookSteps {
         Assert.assertEquals(responseBook.getId(), bookToUpdate.getId(), "Book ID should match");
         Assert.assertEquals(responseBook.getTitle(), bookToUpdate.getTitle(), "Book title should match");
         Assert.assertEquals(responseBook.getAuthor(), bookToUpdate.getAuthor(), "Book author should match");
+    }
+
+    public static Integer getStoredBookId() {
+        return storedBookId;
     }
 }
