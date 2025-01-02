@@ -68,26 +68,5 @@ public class PostBookSteps {
         return bookDetails;
     }
 
-//    @Given("I am not authenticated")
-//    public void setupNoAuthentication() {
-//        request = AuthenticationUtils.getUnauthenticatedRequest();
-//    }
-//
-//    @Step("Providing invalid book details")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Given("I have book details with numeric author")
-//    public void setupNumericAuthorDetails() {
-//        bookDetails = new Book("Test Book " + bookCounter, "12345");
-//        bookCounter++;
-//    }
-//
-//    @Step("Verifying response indicates invalid author input")
-//    @Severity(SeverityLevel.CRITICAL)
-//    @Then("the response should indicate invalid author input")
-//    public void verifyInvalidAuthorInputMessage() {
-//        String responseBody = response.getBody().asString();
-//        Assert.assertTrue(responseBody.contains("Invalid") ||
-//                        responseBody.contains("invalid"),
-//                "Response should indicate invalid author input");
-//    }
+
 }

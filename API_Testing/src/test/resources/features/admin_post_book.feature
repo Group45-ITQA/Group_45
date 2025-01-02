@@ -40,3 +40,11 @@ Feature: Admin Create Book API
     And I have added the book to the system
     When I send a request to add the same book again
     Then The status code of the response should be 409
+
+
+  @PostBook
+  @severity:normal
+  Scenario: Cannot create book with numeric author
+     Given I have book details with numeric author
+     When I send a request to create a book with invalid author
+     Then The status code of the response should be 400
