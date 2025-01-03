@@ -1,3 +1,4 @@
+@type:external_links @social_media
 Feature: Social Media Links
   As a user
   I want to access the social media links
@@ -6,6 +7,7 @@ Feature: Social Media Links
   Background:
     Given I am logged in and on the products page
 
+  @social_media_redirection @minor
   Scenario Outline: Social media redirects
     When I click the "<platform>" social media link
     Then I should be redirected to the "<platform>" page

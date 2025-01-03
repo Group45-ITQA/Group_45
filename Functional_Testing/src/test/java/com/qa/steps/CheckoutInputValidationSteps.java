@@ -21,19 +21,18 @@ public class CheckoutInputValidationSteps {
     }
 
     @When("I enter {string} in the first name field")
-    @Step("Entering first name: {0}")
     public void i_enter_in_the_first_name_field(String firstName) {
+
         checkoutPage.enterFirstName(firstName);
     }
 
     @When("I enter {string} in the last name field")
-    @Step("Entering last name: {0}")
     public void i_enter_in_the_last_name_field(String lastName) {
+
         checkoutPage.enterLastName(lastName);
     }
 
     @Then("the first name field should contain {string}")
-    @Step("Verifying first name value: {0}")
     public void the_first_name_field_should_contain(String expectedFirstName) {
         String actualFirstName = checkoutPage.getFirstNameValue();
         Assert.assertEquals(actualFirstName, expectedFirstName,
@@ -42,7 +41,6 @@ public class CheckoutInputValidationSteps {
     }
 
     @Then("the last name field should contain {string}")
-    @Step("Verifying last name value: {0}")
     public void the_last_name_field_should_contain(String expectedLastName) {
         String actualLastName = checkoutPage.getLastNameValue();
         Assert.assertEquals(actualLastName, expectedLastName,

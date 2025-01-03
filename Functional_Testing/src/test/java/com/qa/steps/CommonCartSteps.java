@@ -21,7 +21,6 @@ public class CommonCartSteps {
     }
 
     @When("I proceed to the checkout page")
-    @Step("Attempting to checkout")
     public void i_click_on_the_checkout_button() {
         cartPage.attemptToCheckout();
     }

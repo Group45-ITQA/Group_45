@@ -1,4 +1,4 @@
-@product
+@type:cart_management @product @cart
 Feature: Product Details Add to Cart Functionality
   As a user
   I want to add products to cart from the product details page
@@ -7,7 +7,7 @@ Feature: Product Details Add to Cart Functionality
   Background:
     Given I am logged in and on the products page
 
-  @product-details @add_to_cart @critical
+  @add_to_cart_from_details @critical @defect
   Scenario: Add product to cart from product details page
     When I click on the "Sauce Labs Backpack" product link
     And I click the Add to Cart button

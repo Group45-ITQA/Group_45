@@ -78,6 +78,25 @@ public class ProductDetailsPage {
         }
     }
 
+    public void clickRemoveButton() {
+        try {
+            WaitUtils.waitForElementClickable(driver, removeButton);
+            pageUtils.click(removeButton);
+        } catch (Exception e) {
+            throw new RuntimeException("Remove button is not clickable", e);
+        }
+    }
+
+    public boolean isAddToCartButtonDisplayed() {
+        try {
+            return WaitUtils.waitForElementVisible(driver, addToCartButton) &&
+                    addToCartButton.isEnabled();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
     public String getProductName() {
         return pageUtils.getText(productName);
     }

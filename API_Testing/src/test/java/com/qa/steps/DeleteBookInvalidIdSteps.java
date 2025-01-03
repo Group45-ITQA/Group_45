@@ -1,21 +1,20 @@
 package com.qa.steps;
 
-import com.qa.utils.StepUtils;
 import io.cucumber.java.en.*;
 import io.qameta.allure.*;
 import static com.qa.config.TestConfig.*;
 
 @Epic("LibraryAPITesting")
 @Feature("BookManagement")
-@Story("GetInvalidBook")
-public class GetBookByInvalidIdSteps {
+@Story("DeleteInvalidBook")
+public class DeleteBookInvalidIdSteps {
 
-    @When("I send a request to get the book with a non-integer ID {string}")
-    public void getBookByInvalidId(String invalidId) {
+    @When("I send a DELETE request to remove a book with invalid ID {string}")
+    public void deleteBookWithInvalidId(String invalidId) {
         BaseSteps.setResponse(
                 BaseSteps.getRequest()
                         .when()
-                        .get(BOOKS_ENDPOINT + "/" + invalidId)
+                        .delete(BOOKS_ENDPOINT + "/" + invalidId)
         );
     }
 }

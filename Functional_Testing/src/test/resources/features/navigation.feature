@@ -1,4 +1,4 @@
-@navigation
+@type:core_navigation @navigation
 Feature: Navigation Functionality
   As a user
   I want to use the navigation menu
@@ -7,24 +7,24 @@ Feature: Navigation Functionality
   Background:
     Given I am logged in and on the products page
 
-  @navigation @cart @critical
+  @cart_page_navigation @critical
   Scenario: Access cart page
     When I click the cart button
     Then I should be on the cart page
 
-  @navigation @menu @critical
+  @menu_navigation @critical
   Scenario: Use menu navigation
     When I click the menu button
     And I click the All Items link
     Then I should be on the inventory page
 
-  @navigation @authentication @critical
+  @logout_navigation @authentication @critical
   Scenario: Logout functionality
     When I click the menu button
     And I click the Logout link
     Then I should be on the login page
 
-  @navigation @cart @reset @medium
+  @reset_cart_state @cart @medium
   Scenario: Reset removes item from cart
     Given I have added "Sauce Labs Backpack" to the cart
     When I click the menu button

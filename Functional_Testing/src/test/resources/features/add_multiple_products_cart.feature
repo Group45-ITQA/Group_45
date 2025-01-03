@@ -1,3 +1,4 @@
+@type:cart_management @cart @product
 Feature: Multiple Products Cart Functionality
   As a user
   I want to add multiple products to cart
@@ -6,7 +7,7 @@ Feature: Multiple Products Cart Functionality
   Background:
     Given I am logged in and on the products page
 
-  @multiple_products @cart_management @critical
+  @critical @add_multiple_products_to_cart
   Scenario: Add multiple products to cart
     When I add 2 products to the cart
     Then I should see 2 products in the cart

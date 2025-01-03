@@ -11,14 +11,14 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import com.qa.testdata.TestDataSetup;
 
 @CucumberOptions(
-        // Feature files location - for all team members
+        // Feature files location
         features = "src/test/resources/features",
 
-        // Step definitions package - common for all
+        // Step definitions package
         glue = "com.qa.steps",
 
         // Tags for all API types
-        tags = "@GetAllBooks or @GetSingleBook or @PostBook or @PostWithoutTitle or @UpdateBook or @PostWithoutAuthor or @PostDuplicateBook",
+        tags = "@GetAllBooks or @GetSingleBook or @PostBook  or @UpdateBook  or @DeleteBook",
 
         // Reporting configuration used by all tests
         plugin = {

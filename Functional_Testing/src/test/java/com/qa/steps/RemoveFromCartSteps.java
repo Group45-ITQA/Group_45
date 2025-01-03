@@ -20,13 +20,11 @@ public class RemoveFromCartSteps {
 
 
     @When("I remove {string} from the cart")
-    @Step("Removing item from cart: {0}")
     public void i_remove_item_from_cart(String itemName) {
         cartPage.removeItemFromCart(itemName);
     }
 
     @Then("the item {string} should not be visible in the cart")
-    @Step("Verifying item is removed from cart: {0}")
     public void item_should_not_be_visible_in_cart(String itemName) {
         Assert.assertFalse(cartPage.isItemInCart(itemName),
                 "Item '" + itemName + "' should not be visible in cart after removal");

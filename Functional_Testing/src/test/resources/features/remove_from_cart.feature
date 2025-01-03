@@ -1,4 +1,4 @@
-@cart
+@type:cart_management @cart
 Feature: Remove Items from Cart
   As a user
   I want to remove items from my cart
@@ -8,7 +8,7 @@ Feature: Remove Items from Cart
     Given I am logged in and on the products page
     And I have added "Sauce Labs Backpack" to the cart
 
-  @remove_from_cart @critical
+  @remove_single_item_from_cart @critical @defect
   Scenario: Remove an item from cart
     When I navigate to the cart page
     And I remove "Sauce Labs Backpack" from the cart

@@ -107,7 +107,6 @@ public class TestDataSetup {
         createdBookIds.clear();
     }
 
-
     public static Integer getFirstBookId() {
         return createdBookIds.isEmpty() ? null : createdBookIds.get(0);
     }
