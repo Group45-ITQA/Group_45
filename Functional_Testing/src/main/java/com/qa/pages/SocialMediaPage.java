@@ -64,6 +64,9 @@ public class SocialMediaPage {
             return false;
         }
     }
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
 
     public void closeAdditionalWindows() {
         String mainWindow = driver.getWindowHandle();
