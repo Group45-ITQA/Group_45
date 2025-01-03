@@ -2,34 +2,41 @@ package com.qa.runner;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import io.restassured.RestAssured;
 import static com.qa.config.TestConfig.*;
+import io.qameta.allure.restassured.AllureRestAssured;
+import com.qa.testdata.TestDataSetup;
 
 @CucumberOptions(
-        // Feature files location - for all team members
+        // Feature files location
         features = "src/test/resources/features",
 
-        // Step definitions package - common for all
+        // Step definitions package
         glue = "com.qa.steps",
 
         // Tags for all API types
-        tags = "@GetAllBooks or @GetSingleBook or @CreateBook or @UpdateBook or @DeleteBook",
+        tags = "@GetAllBooks or @GetSingleBook or @PostBook  or @UpdateBook  or @DeleteBook",
 
         // Reporting configuration used by all tests
         plugin = {
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "pretty",
-                "html:target/cucumber-reports/library-api-tests.html",
-                "json:target/cucumber-reports/library-api-tests.json",
-                "testng:target/testng-cucumber-reports/library-api-tests.xml"
+                "rerun:target/failed_scenarios.txt"
         },
-        monochrome = true
+        monochrome = true,
+        dryRun = false,
+        publish = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 
     @BeforeClass(alwaysRun = true)
     public void setupAPITests() {
         RestAssured.baseURI = BASE_URL;
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+        RestAssured.filters(new AllureRestAssured());
+        TestDataSetup.clearDatabase();
+        TestDataSetup.setupTestData();
     }
 }

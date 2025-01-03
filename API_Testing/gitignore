@@ -1,0 +1,10 @@
+# Project specific ignores
+.idea/
+target/
+*.iml
+workspace.xml
+misc.xml
+
+# Test reports
+surefire-reports/
+test-output/

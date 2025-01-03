@@ -1,47 +1,21 @@
-# Ignore Maven target directories
-Funtional_Testing/target/
-API_Testing/target/
-
-# Ignore logs
-*.log
-
-# Ignore Eclipse or IntelliJ project files
-*.iml
+# Root level ignores
 .idea/
-*.ipr
-*.iws
-*.class
+.idea/**/
+**/.idea/
+*.iml
+workspace.xml
+misc.xml
 
-# Ignore Maven dependencies folder
-.mvn/
+# Maven target directories
+**/target/
 target/
-dependency-reduced-pom.xml
 
-# Ignore build directories
-build/
-out/
-
-# Ignore temporary files
-*.tmp
-*.swp
-*.bak
-*~
-
-# Ignore OS files
+# Common ignores
+*.log
 .DS_Store
 Thumbs.db
-desktop.ini
+/.idea
+.idea/workspace.xml
 
-# Ignore compiled files
-*.jar
-*.war
-*.ear
-
-# Exclude test reports
-**/surefire-reports/
-**/failsafe-reports/
-**/test-output/
-
-# Ignore environment variables and secrets
-.env
-.env.*
+allure-results/
+test-output/

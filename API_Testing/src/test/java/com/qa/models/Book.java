@@ -1,5 +1,4 @@
 package com.qa.models;
-
 /**
  * This class represents a Book entity in our system.
  */
@@ -7,6 +6,13 @@ public class Book {
     private Integer id;
     private String title;
     private String author;
+
+    public Book() {
+    }
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
 
     // Getters and Setters
     public Integer getId() {
