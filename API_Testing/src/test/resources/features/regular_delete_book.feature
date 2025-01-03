@@ -11,8 +11,7 @@ Feature: Regular User Delete Book API
 
   @DeleteBook
   @severity:critical
-  @bug:LIBRARY-104
-  @defect:UserPermissions
+  @defect
   Scenario: Regular user cannot delete a book
     Given I have a valid book ID to delete
     When I send a DELETE request to remove the book with the stored ID

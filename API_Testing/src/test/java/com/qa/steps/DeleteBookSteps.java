@@ -27,7 +27,6 @@ public class DeleteBookSteps {
         lastBookId = bookIds.get(bookIds.size() - 1);
     }
 
-
     @When("I send a DELETE request to remove the book with the stored ID")
     public void deleteBookWithStoredId() {
         BaseSteps.setResponse(
@@ -35,5 +34,5 @@ public class DeleteBookSteps {
                         .when()
                         .delete(BOOKS_ENDPOINT + "/" + lastBookId)
         );
-}
+    }
 }

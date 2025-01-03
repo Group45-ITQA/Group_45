@@ -1,5 +1,4 @@
 package com.qa.models;
-
 /**
  * This class represents a Book entity in our system.
  */

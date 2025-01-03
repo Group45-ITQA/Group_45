@@ -19,8 +19,7 @@ Feature: Get Book By ID API
 
   @GetSingleBook
   @severity:medium
-  @bug:LIBRARY-101
-  @defect:InvalidIDHandling
+  @defect
   Scenario: Verify API handles non-integer ID format
     When I send a request to get the book with a non-integer ID "abc"
     Then The status code of the response should be 400

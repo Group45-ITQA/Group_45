@@ -17,7 +17,7 @@ Feature: Admin Create Book API
     Then The status code of the response should be 201
     And the response should contain the created book details
 
-  @PostWithoutTitle
+  @PostBook
   @severity:critical
   Scenario: Cannot create a book without a title
     Given I have book details without a title
@@ -25,7 +25,7 @@ Feature: Admin Create Book API
     Then The status code of the response should be 400
     And the response should indicate a "title" is required
 
-  @PostWithoutAuthor
+  @PostBook
   @severity:critical
   Scenario: Cannot create a book without an author
     Given I have book details without an author
@@ -33,14 +33,13 @@ Feature: Admin Create Book API
     Then The status code of the response should be 400
     And the response should indicate a "author" is required
 
-  @PostDuplicateBook
+  @PostBook
   @severity:critical
   Scenario: Cannot create duplicate book
     Given I have valid book details
     And I have added the book to the system
     When I send a request to add the same book again
     Then The status code of the response should be 409
-
 
   @PostBook
   @severity:normal

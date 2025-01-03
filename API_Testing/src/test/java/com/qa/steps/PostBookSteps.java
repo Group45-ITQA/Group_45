@@ -67,6 +67,4 @@ public class PostBookSteps {
     public Book getBookDetails() {
         return bookDetails;
     }
-
-
 }

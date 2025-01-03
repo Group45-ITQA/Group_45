@@ -18,5 +18,4 @@ public class GetBookByInvalidIdSteps {
                         .get(BOOKS_ENDPOINT + "/" + invalidId)
         );
     }
-
 }

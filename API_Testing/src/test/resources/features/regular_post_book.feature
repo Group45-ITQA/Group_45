@@ -11,8 +11,7 @@ Feature: Regular User Create Book API
 
   @PostBook
   @severity:normal
-  @bug:LIBRARY-103
-  @defect:UserPermissions
+  @defect
   Scenario: Regular user can create a book
     Given I have valid book details
     When I send a request to create a book

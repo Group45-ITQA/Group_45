@@ -19,8 +19,7 @@ Feature: Update Book API
 
   @UpdateBook
   @severity:normal
-  @bug:LIBRARY-102
-  @defect:NonExistentIDHandling
+  @defect
   Scenario: Attempt to update non-existent book
     When I send a PUT request to update a non-existent book with ID "999"
     Then The status code of the response should be 404
