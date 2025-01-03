@@ -1,4 +1,4 @@
-@product @cart
+@type:product_management @product @cart
 Feature: Remove Product from Cart on Product Details Page
   As a user
   I want to remove products from my cart while viewing product details
@@ -9,7 +9,7 @@ Feature: Remove Product from Cart on Product Details Page
     And I have added "Sauce Labs Backpack" to the cart
     And I click on the "Sauce Labs Backpack" product link
 
-  @remove_from_cart @product_details @critical
+  @remove_from_single_product_page @product_details @critical
   Scenario: Remove product from cart on product details page
     When I click the remove button on the product details page
     Then the cart count should be "0"

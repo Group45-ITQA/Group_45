@@ -16,7 +16,6 @@ public class ProductDetailsRemoveSteps {
     }
 
     @When("I click the remove button on the product details page")
-    @Step("Clicking remove button on product details page")
     public void clickRemoveButtonOnProductDetails() {
         Assert.assertTrue(productDetailsPage.isRemoveButtonDisplayed(),
                 "Remove button should be visible before removing item");
@@ -24,7 +23,6 @@ public class ProductDetailsRemoveSteps {
     }
 
     @Then("the add to cart button should be visible")
-    @Step("Verifying add to cart button is visible")
     public void verifyAddToCartButtonVisible() {
         Assert.assertTrue(productDetailsPage.isAddToCartButtonDisplayed(),
                 "Add to Cart button should be visible after removing item");
