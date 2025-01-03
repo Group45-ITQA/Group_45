@@ -9,7 +9,7 @@ Feature: Product Cart Functionality
 
   @critical @defect @add_single_product_to_cart
   Scenario: Add product to cart
-    When I add a product to the cart
+    When I add "Sauce Labs Backpack" to the cart
     Then the cart count should be "1"
 
 
