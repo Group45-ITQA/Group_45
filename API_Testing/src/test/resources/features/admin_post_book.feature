@@ -19,6 +19,7 @@ Feature: Admin Create Book API
 
   @PostBook
   @severity:critical
+  @defect
   Scenario: Cannot create a book without a title
     Given I have book details without a title
     When I send a request to create a book without title
@@ -27,6 +28,7 @@ Feature: Admin Create Book API
 
   @PostBook
   @severity:critical
+  @defect
   Scenario: Cannot create a book without an author
     Given I have book details without an author
     When I send a request to create a book without author
@@ -35,6 +37,7 @@ Feature: Admin Create Book API
 
   @PostBook
   @severity:critical
+  @defect
   Scenario: Cannot create duplicate book
     Given I have valid book details
     And I have added the book to the system
@@ -43,6 +46,7 @@ Feature: Admin Create Book API
 
   @PostBook
   @severity:normal
+  @defect
   Scenario: Cannot create book with numeric author
      Given I have book details with numeric author
      When I send a request to create a book with invalid author
