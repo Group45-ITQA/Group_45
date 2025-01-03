@@ -11,13 +11,12 @@ import static com.qa.config.TestConfig.*;
 @Feature("BookManagement")
 @Story("CreateBookInvalidAuthor")
 public class PostBookInvalidAuthorSteps {
-    private Book bookDetails;
-    private static int bookCounter = 1;
+    private String requestBody;
 
     @Given("I have book details with numeric author")
     public void setupNumericAuthorDetails() {
         String title = BookUtils.generateUniqueTitle("Test Book with numeric author");
-        bookDetails = new Book(title, "12345");
+        requestBody = String.format("{\"title\": \"%s\", \"author\": 12345}", title);
     }
 
     @When("I send a request to create a book with invalid author")
@@ -25,7 +24,7 @@ public class PostBookInvalidAuthorSteps {
         BaseSteps.setResponse(
                 BaseSteps.getRequest()
                         .contentType("application/json")
-                        .body(bookDetails)
+                        .body(requestBody)
                         .when()
                         .post(BOOKS_ENDPOINT)
         );
