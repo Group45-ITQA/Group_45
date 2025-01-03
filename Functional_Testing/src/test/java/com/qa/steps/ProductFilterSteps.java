@@ -15,13 +15,11 @@ public class ProductFilterSteps {
     }
 
     @When("I select the {string} filter option")
-    @Step("Selecting filter option: {filterOption}")
     public void selectFilterOption(String filterOption) {
         productPage.selectFilter(filterOption);
     }
 
     @Then("the products should be sorted by price low to high")
-    @Step("Verifying products are sorted by price low to high")
     public void verifyPriceSorting() {
         Assert.assertTrue(productPage.verifyPriceLowToHighFilter(),
                 "Defect: Products are not properly sorted by price low to high");

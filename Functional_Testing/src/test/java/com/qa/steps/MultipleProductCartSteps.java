@@ -19,13 +19,11 @@ public class MultipleProductCartSteps {
     }
 
     @When("I add {int} products to the cart")
-    @Step("Adding {numberOfProducts} products to cart")
     public void i_add_multiple_products_to_cart(int numberOfProducts) {
         productPage.addMultipleProductsToCart(numberOfProducts);
     }
 
     @Then("I should see {int} products in the cart")
-    @Step("Verifying {expectedCount} products in cart")
     public void verify_multiple_products_in_cart(int expectedCount) {
         Assert.assertTrue(productPage.areProductsAddedToCart(expectedCount),
                 "Expected " + expectedCount + " products in cart");

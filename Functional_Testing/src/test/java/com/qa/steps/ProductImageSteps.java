@@ -19,14 +19,12 @@ public class ProductImageSteps {
 
 
     @When("I verify the product images")
-    @Step("Verifying product images uniqueness")
     public void verifyProductImages() {
         Assert.assertFalse(productPage.hasDuplicateImages(),
                 "Defect: Found duplicate product images when all should be unique");
     }
 
     @Then("all product images should be unique")
-    @Step("Confirming images are unique")
     public void all_product_images_should_be_unique() {
         Assert.assertFalse(productPage.hasDuplicateImages(),
                 "Defect: Found duplicate product images when all should be unique");

@@ -20,13 +20,11 @@ public class AddAllProductsSteps {
     }
 
     @When("I add all available products to the cart")
-    @Step("Adding all available products to cart")
     public void i_add_all_products_to_cart() {
         numberOfProductsAdded = productPage.addAllProductsToCart();
     }
 
     @Then("all products should be in the cart")
-    @Step("Verifying all products are in cart")
     public void verify_all_products_in_cart() {
         String actualCount = cartPage.getItemCount();
         Assert.assertEquals(actualCount, String.valueOf(numberOfProductsAdded),

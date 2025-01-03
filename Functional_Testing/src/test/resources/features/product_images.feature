@@ -1,4 +1,4 @@
-@product @image
+@type:ui_validation @product
 Feature: Product Image Verification
   As a QA engineer
   I want to verify product images
@@ -7,7 +7,7 @@ Feature: Product Image Verification
   Background:
     Given I am logged in and on the products page
 
-  @image-verification @defect @medium
+  @verify_unique_product_images @normal @defect
   Scenario: Verify product images are unique
     When I verify the product images
     Then all product images should be unique
