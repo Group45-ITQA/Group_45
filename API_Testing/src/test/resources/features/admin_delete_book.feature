@@ -11,6 +11,7 @@ Feature: Admin Delete Book API
 
   @DeleteBook
   @severity:critical
+  @defect
   Scenario: Successfully delete a book via DELETE endpoint
     Given I have a valid book ID to delete
     When I send a DELETE request to remove the book with the stored ID
@@ -18,6 +19,7 @@ Feature: Admin Delete Book API
 
   @DeleteBook
   @severity:normal
+  @defect
   Scenario: Attempt to delete non-existent book
     When I send a DELETE request to remove a non-existent book with ID "999"
     Then The status code of the response should be 404
