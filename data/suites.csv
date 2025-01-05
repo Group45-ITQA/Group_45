@@ -1,0 +1,121 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"  As a library administrator
+  I want to create and validate books
+  So that I can maintain a high-quality library catalog","159","Successfully create a book via POST endpoint","","Sun Jan 05 04:05:30 GMT 2025","passed","Sun Jan 05 04:05:30 GMT 2025","","Admin Create Book API","Successfully create a book via POST endpoint",""
+"  As a user
+  I want to use the navigation menu
+  So that I can access different parts of the application","1640","Use menu navigation","","Sun Jan 05 04:06:19 GMT 2025","passed","Sun Jan 05 04:06:21 GMT 2025","","Navigation Functionality","Use menu navigation",""
+"  As a library system
+  I want to control access to book updates
+  So that I can maintain system security and data integrity","97","Regular user cannot update a book","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Update Book Access Control API","Regular user cannot update a book",""
+"  As a user
+  I want to filter products
+  So that I can view them in my preferred order","2111","Verify price low to high filter","","Sun Jan 05 04:07:27 GMT 2025","failed","Sun Jan 05 04:07:29 GMT 2025","","Product Filtering","Verify price low to high filter",""
+"  As a library administrator
+  I want to update existing books in the system
+  So that I can maintain accurate book information","104","Successfully update an existing book","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Update Book API","Successfully update an existing book",""
+"  As a library administrator
+  I want to update existing books in the system
+  So that I can maintain accurate book information","92","Attempt to update book with invalid ID format","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:32 GMT 2025","","Update Book API","Attempt to update book with invalid ID format",""
+"  As a library administrator
+  I want to create and validate books
+  So that I can maintain a high-quality library catalog","104","Cannot create a book without an author","","Sun Jan 05 04:05:30 GMT 2025","failed","Sun Jan 05 04:05:30 GMT 2025","","Admin Create Book API","Cannot create a book without an author",""
+"  As a user
+  I want to access the social media links
+  So that I can follow the company on different platforms","2252","Social media redirects","","Sun Jan 05 04:07:46 GMT 2025","passed","Sun Jan 05 04:07:48 GMT 2025","","Social Media Links","Social media redirects",""
+"  As a library administrator
+  I want to delete books from the system
+  So that I can maintain an accurate library catalog","255","Successfully delete a book via DELETE endpoint","","Sun Jan 05 04:05:29 GMT 2025","failed","Sun Jan 05 04:05:29 GMT 2025","","Admin Delete Book API","Successfully delete a book via DELETE endpoint",""
+"  As a user
+  I want to add all available products to my cart
+  So that I can purchase everything at once","2406","Add all products to cart","","Sun Jan 05 04:05:39 GMT 2025","failed","Sun Jan 05 04:05:41 GMT 2025","","Add All Products to Cart","Add all products to cart",""
+"  As a user
+  I want to add products to cart from the product details page
+  So that I can purchase items after viewing their details","31225","Add product to cart from product details page","","Sun Jan 05 04:06:34 GMT 2025","failed","Sun Jan 05 04:07:06 GMT 2025","","Product Details Add to Cart Functionality","Add product to cart from product details page",""
+"  As a user
+  I want to remove items from my cart
+  So that I can update my purchase selection","11144","Remove an item from cart","","Sun Jan 05 04:07:31 GMT 2025","passed","Sun Jan 05 04:07:42 GMT 2025","","Remove Items from Cart","Remove an item from cart",""
+"  As a library administrator
+  I want to create and validate books
+  So that I can maintain a high-quality library catalog","99","Cannot create book with numeric author","","Sun Jan 05 04:05:30 GMT 2025","failed","Sun Jan 05 04:05:30 GMT 2025","","Admin Create Book API","Cannot create book with numeric author",""
+"  As a user
+  I want to verify the checkout form fields maintain correct input values
+  So that I can complete my purchase accurately","1338","Verify the first name field retains the entered value","","Sun Jan 05 04:05:44 GMT 2025","passed","Sun Jan 05 04:05:46 GMT 2025","","Checkout Form Validation","Verify the first name field retains the entered value",""
+"  As a user
+  I want to verify the checkout form fields maintain correct input values
+  So that I can complete my purchase accurately","1306","Verify the last name field retains the entered value","","Sun Jan 05 04:05:46 GMT 2025","failed","Sun Jan 05 04:05:47 GMT 2025","","Checkout Form Validation","Verify the last name field retains the entered value",""
+"  As a library administrator
+  I want to retrieve all books in the system
+  So that I can view the complete library catalog","228","Successfully retrieve all books via GET endpoint","","Sun Jan 05 04:05:30 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Get All Books API","Successfully retrieve all books via GET endpoint",""
+"  As a user
+  I want to click on product links
+  So that I can view the correct product details","1041","Verify product link redirects to correct product","","Sun Jan 05 04:07:30 GMT 2025","failed","Sun Jan 05 04:07:31 GMT 2025","","Product Details Navigation","Verify product link redirects to correct product",""
+"  As a regular library user
+  I want to understand my deletion permissions
+  So that I know what operations I can perform","208","Regular user cannot delete a book","","Sun Jan 05 04:05:31 GMT 2025","failed","Sun Jan 05 04:05:31 GMT 2025","","Regular User Delete Book API","Regular user cannot delete a book",""
+"  As a user
+  I want to remove products from my cart while viewing product details
+  So that I can update my purchase selection directly from the product page","21190","Remove product from cart on product details page","","Sun Jan 05 04:07:06 GMT 2025","failed","Sun Jan 05 04:07:27 GMT 2025","","Remove Product from Cart on Product Details Page","Remove product from cart on product details page",""
+"  As a library administrator
+  I want to update existing books in the system
+  So that I can maintain accurate book information","101","Attempt to update non-existent book","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Update Book API","Attempt to update non-existent book",""
+"  As a user
+  I want to remove products directly from the inventory page
+  So that I can manage my cart without navigating to the cart page","1097","Remove product using remove button on inventory page","","Sun Jan 05 04:07:42 GMT 2025","failed","Sun Jan 05 04:07:43 GMT 2025","","Remove Product from Inventory Page","Remove product using remove button on inventory page",""
+"  As a user
+  I want to use the navigation menu
+  So that I can access different parts of the application","1610","Logout functionality","","Sun Jan 05 04:06:21 GMT 2025","passed","Sun Jan 05 04:06:23 GMT 2025","","Navigation Functionality","Logout functionality",""
+"  As a QA engineer
+  I want to verify product images
+  So that I can ensure each product has unique images","949","Verify product images are unique","","Sun Jan 05 04:07:29 GMT 2025","failed","Sun Jan 05 04:07:30 GMT 2025","","Product Image Verification","Verify product images are unique",""
+"  As a user
+  I want to use the navigation menu
+  So that I can access different parts of the application","11763","Reset removes item from cart","","Sun Jan 05 04:06:23 GMT 2025","passed","Sun Jan 05 04:06:34 GMT 2025","","Navigation Functionality","Reset removes item from cart",""
+"  As a library administrator
+  I want to delete books from the system
+  So that I can maintain an accurate library catalog","121","Attempt to delete non-existent book","","Sun Jan 05 04:05:29 GMT 2025","failed","Sun Jan 05 04:05:29 GMT 2025","","Admin Delete Book API","Attempt to delete non-existent book",""
+"  As a library administrator
+  I want to create and validate books
+  So that I can maintain a high-quality library catalog","116","Cannot create a book without a title","","Sun Jan 05 04:05:30 GMT 2025","failed","Sun Jan 05 04:05:30 GMT 2025","","Admin Create Book API","Cannot create a book without a title",""
+"  As a user
+  I want to add multiple products to cart
+  So that I can purchase them together","2184","Add multiple products to cart","","Sun Jan 05 04:05:41 GMT 2025","passed","Sun Jan 05 04:05:43 GMT 2025","","Multiple Products Cart Functionality","Add multiple products to cart",""
+"  As a user
+  I want to add products to the cart
+  So that I can purchase them","1065","Add product to cart","","Sun Jan 05 04:05:43 GMT 2025","passed","Sun Jan 05 04:05:44 GMT 2025","","Product Cart Functionality","Add product to cart",""
+"  As a library administrator
+  I want to create and validate books
+  So that I can maintain a high-quality library catalog","192","Cannot create duplicate book","","Sun Jan 05 04:05:30 GMT 2025","failed","Sun Jan 05 04:05:30 GMT 2025","","Admin Create Book API","Cannot create duplicate book",""
+"  As a user
+  I want to use the navigation menu
+  So that I can access different parts of the application","1010","Access cart page","","Sun Jan 05 04:06:18 GMT 2025","passed","Sun Jan 05 04:06:19 GMT 2025","","Navigation Functionality","Access cart page",""
+"  As a user
+  I want to verify checkout is not possible with an empty cart
+  So that I can ensure the checkout process works correctly","31282","Verify checkout is not possible with an empty cart","","Sun Jan 05 04:05:47 GMT 2025","failed","Sun Jan 05 04:06:18 GMT 2025","","Cart Checkout Functionality","Verify checkout is not possible with an empty cart",""
+"  As a regular library user
+  I want to create books
+  So that I can contribute to the library catalog","105","Regular user can create a book","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Regular User Create Book API","Regular user can create a book",""
+"  As a library administrator
+  I want to delete books from the system
+  So that I can maintain an accurate library catalog","102","Attempt to delete book with invalid ID format","","Sun Jan 05 04:05:29 GMT 2025","passed","Sun Jan 05 04:05:30 GMT 2025","","Admin Delete Book API","Attempt to delete book with invalid ID format",""
+"  As a library administrator
+  I want to update existing books in the system
+  So that I can maintain accurate book information","91","Cannot update book with empty body","","Sun Jan 05 04:05:32 GMT 2025","passed","Sun Jan 05 04:05:32 GMT 2025","","Update Book API","Cannot update book with empty body",""
+"  As a library user
+  I want to retrieve a specific book by its ID
+  So that I can view its details","108","Verify API handles non-integer ID format","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Get Book By ID API","Verify API handles non-integer ID format",""
+"  As a library user
+  I want to retrieve a specific book by its ID
+  So that I can view its details","109","Successfully retrieve a book by its ID","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Get Book By ID API","Successfully retrieve a book by its ID",""
+"  As a user
+  I want to access the social media links
+  So that I can follow the company on different platforms","2335","Social media redirects","","Sun Jan 05 04:07:43 GMT 2025","passed","Sun Jan 05 04:07:46 GMT 2025","","Social Media Links","Social media redirects",""
+"  As a library system
+  I want to control access to book updates
+  So that I can maintain system security and data integrity","15","Cannot update book without authentication","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Update Book Access Control API","Cannot update book without authentication",""
+"  As a user
+  I want to access the social media links
+  So that I can follow the company on different platforms","2170","Social media redirects","","Sun Jan 05 04:07:48 GMT 2025","passed","Sun Jan 05 04:07:50 GMT 2025","","Social Media Links","Social media redirects",""
+"  As a library system
+  I want to prevent unauthorized book creation
+  So that I can maintain system security","16","Cannot create book without authentication","","Sun Jan 05 04:05:31 GMT 2025","passed","Sun Jan 05 04:05:31 GMT 2025","","Unauthenticated Create Book API","Cannot create book without authentication",""
